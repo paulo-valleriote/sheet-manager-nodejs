@@ -1,9 +1,17 @@
-import type { ISheet } from "@/domain/entities/Sheet";
+import type { 
+	ICreateSheetParams,
+	IDeleteSheetParams,
+	IGetSheetParams,
+	IGetSheetResponse,
+	IListSheetsParams,
+	IListSheetsResponse,
+	IUpdateSheetParams
+} from './@types/sheets'
 
 export interface ISheetsRepository {
-	create(data: any): Promise<void>
-	delete(sheet_id: string): Promise<void>
-	get(sheet_id: string): Promise<ISheet | null>
-	list(user_id: string): Promise<ISheet[]>
-	update(sheet_id: string, data: ISheet): Promise<void>
+	create(data: ICreateSheetParams): Promise<void>
+	delete(data: IDeleteSheetParams): Promise<void>
+	get(data: IGetSheetParams): Promise<IGetSheetResponse>
+	list(data: IListSheetsParams): Promise<IListSheetsResponse>
+	update(data: IUpdateSheetParams): Promise<void>
 }
