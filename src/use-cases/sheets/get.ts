@@ -1,9 +1,10 @@
 import type { ISheetsRepository } from "@/repositories/sheets-repository";
+import type { IGetSheetParams } from "@/repositories/@types/sheets";
 
 export class GetSheetUseCase {
 	constructor(private sheetsRepository: ISheetsRepository) {}
 
-	async execute(sheetId: string) {
-		return await this.sheetsRepository.get(sheetId)
+	async execute(data: IGetSheetParams) {
+		return await this.sheetsRepository.get(data)
 	}
 }
