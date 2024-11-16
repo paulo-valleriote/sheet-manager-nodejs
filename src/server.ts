@@ -1,5 +1,11 @@
 import app from './app'
+import { ENV } from '@env'
 
-app.listen({ port: 3000 }, () => {
-  console.log('Server is running on port 3000')
-})
+try {
+  app.listen({ port: ENV.PORT }, () => {
+    console.log(`Server is running on port ${ENV.PORT}`)
+  })
+} catch (err) {
+  app.log.error(err)
+  process.exit(1)
+}
