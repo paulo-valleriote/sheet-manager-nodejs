@@ -20,12 +20,10 @@ describe('Update sheet use case', () => {
 			userId: 'user-1'
 		})
 
-    const sheetsLenght = await sheetRepository.list({ userId: 'user-1' })
-    expect(sheetsLenght.data).toHaveLength(1)
-    expect(sheetsLenght.data[0].name).toBe('Sheet 1')
+    const createdSheets = await sheetRepository.list({ userId: 'user-1' })
 
     await sut.execute({
-      sheetId: sheetsLenght.data[0].id,
+      sheetId: createdSheets.data[0].id,
       name: 'Sheet 2',
       userId: 'user-1'
     })

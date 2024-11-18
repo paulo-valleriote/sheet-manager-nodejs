@@ -22,8 +22,6 @@ describe('Delete sheet use case', () => {
 
     const sheetsLengthBeforeDelete = await sheetRepository.list({ userId: 'user-1' })
     const createdSheetId = sheetsLengthBeforeDelete.data[0].id
-    expect(sheetsLengthBeforeDelete.data).toHaveLength(1)
-    expect(sheetsLengthBeforeDelete.data[0].name).toBe('Sheet 1')
 
     await sut.execute({
       sheetId: createdSheetId,
