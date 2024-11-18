@@ -5,6 +5,12 @@ export class GetSheetUseCase {
 	constructor(private sheetsRepository: ISheetsRepository) {}
 
 	async execute(data: IGetSheetParams) {
-		return await this.sheetsRepository.get(data)
+		const sheet = await this.sheetsRepository.get(data)
+
+    if (!sheet.data) {
+      throw new Error('Sheet not found')
+    }
+
+    return sheet
 	}
 }

@@ -15,7 +15,10 @@ export class InMemorySheetRepository implements ISheetsRepository {
   }
 
   async get(data: IGetSheetParams): Promise<IGetSheetResponse> {
-    const sheet = this.sheets.find((sheet) => sheet.id === data.sheetId)
+    const sheet = this.sheets.find((sheet) => 
+      sheet.id === data.sheetId
+      && sheet.userId === data.userId
+    )
 
     if (!sheet) {
       return {
@@ -39,7 +42,11 @@ export class InMemorySheetRepository implements ISheetsRepository {
   }
 
   async update(data: IUpdateSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId)
+    const sheetIndex = this.sheets.findIndex((sheet) => 
+      sheet.id === data.sheetId
+      && sheet.userId === data.userId
+    )
+
     this.sheets[sheetIndex] = {
       ...this.sheets[sheetIndex],
       ...data,
@@ -48,7 +55,11 @@ export class InMemorySheetRepository implements ISheetsRepository {
 	}
   
   async delete(data: IDeleteSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId)
+    const sheetIndex = this.sheets.findIndex((sheet) => 
+      sheet.id === data.sheetId
+      && sheet.userId === data.userId
+    )
+
     this.sheets.splice(sheetIndex, 1)
   }
 }

@@ -1,0 +1,45 @@
+import { describe, it, expect, beforeEach } from 'vitest'
+import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
+import { CreateSheetUseCase } from './create'
+import { UpdateSheetUseCase } from './update'
+
+describe('Update sheet use case', () => {
+  let sheetRepository: InMemorySheetRepository
+  let createSheetUseCase: CreateSheetUseCase
+  let updateSheetUseCase: UpdateSheetUseCase
+
+  beforeEach(() => {
+    sheetRepository = new InMemorySheetRepository()
+    createSheetUseCase = new CreateSheetUseCase(sheetRepository)
+    updateSheetUseCase = new UpdateSheetUseCase(sheetRepository)
+  })
+
+	it('should be able to update a sheet', async () => {
+		await createSheetUseCase.execute({
+			name: 'Sheet 1',
+			userId: 'user-1'
+		})
+
+    const sheetsLenght = await sheetRepository.list({ userId: 'user-1' })
+    expect(sheetsLenght.data).toHaveLength(1)
+    expect(sheetsLenght.data[0].name).toBe('Sheet 1')
+
+    await updateSheetUseCase.execute({
+      sheetId: sheetsLenght.data[0].id,
+      name: 'Sheet 2',
+      userId: 'user-1'
+    })
+
+    const sheets = await sheetRepository.list({ userId: 'user-1' })
+    expect(sheets.data).toHaveLength(1)
+    expect(sheets.data[0].name).toBe('Sheet 2')
+	})
+
+  it('should not be able to update a sheet with invalid sheetId', async () => {
+    await expect(updateSheetUseCase.execute({
+      sheetId: 'invalid-sheet-id',
+      name: 'Sheet 2',
+      userId: 'user-1'
+    })).rejects.toBeInstanceOf(Error)
+  })
+})
