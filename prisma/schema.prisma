@@ -20,6 +20,8 @@ model Sheet {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id])
+
+  @@map("sheets")
 }
 
 model User {
@@ -27,6 +29,7 @@ model User {
   email        String
   passwordHash String   @map("password_hash")
   createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
   sheets       Sheet[]
+
+  @@map("users")
 }
