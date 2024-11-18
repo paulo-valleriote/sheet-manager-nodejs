@@ -6,12 +6,12 @@ import { GetSheetUseCase } from './get'
 describe('Get sheet use case', () => {
   let sheetRepository: InMemorySheetRepository
   let createSheetUseCase: CreateSheetUseCase
-  let getSheetUseCase: GetSheetUseCase
+  let sut: GetSheetUseCase
 
   beforeEach(() => {
     sheetRepository = new InMemorySheetRepository()
     createSheetUseCase = new CreateSheetUseCase(sheetRepository)
-    getSheetUseCase = new GetSheetUseCase(sheetRepository)
+    sut = new GetSheetUseCase(sheetRepository)
   })
 
 	it('should be able to get a sheet', async () => {
@@ -23,7 +23,7 @@ describe('Get sheet use case', () => {
     const sheets = await sheetRepository.list({ userId: 'user-1' })
     const sheetId = sheets.data[0].id
 
-    const sheet = await getSheetUseCase.execute({
+    const sheet = await sut.execute({
       sheetId,
       userId: 'user-1'
     })
@@ -40,14 +40,14 @@ describe('Get sheet use case', () => {
     const sheets = await sheetRepository.list({ userId: 'user-2' })
     const sheetId = sheets.data[0].id
 
-    await expect(getSheetUseCase.execute({
+    await expect(sut.execute({
       sheetId,
       userId: 'user-1'
     })).rejects.toBeInstanceOf(Error)
   })
 
   it('should return data as null if no sheet is found', async () => {
-    await expect(getSheetUseCase.execute({
+    await expect(sut.execute({
       sheetId: 'sheet-1',
       userId: 'user-1'
     })).rejects.toBeInstanceOf(Error)

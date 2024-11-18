@@ -4,15 +4,15 @@ import { CreateSheetUseCase } from './create'
 
 describe('Create sheet use case', () => {
   let sheetRepository: InMemorySheetRepository
-  let createSheetUseCase: CreateSheetUseCase
+  let sut: CreateSheetUseCase
 
   beforeEach(() => {
     sheetRepository = new InMemorySheetRepository()
-    createSheetUseCase = new CreateSheetUseCase(sheetRepository)
+    sut = new CreateSheetUseCase(sheetRepository)
   })
 
 	it('should be able to create a sheet', async () => {
-		await createSheetUseCase.execute({
+		await sut.execute({
 			name: 'Sheet 1',
 			userId: 'user-1'
 		})

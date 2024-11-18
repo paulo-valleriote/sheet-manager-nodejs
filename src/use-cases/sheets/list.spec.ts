@@ -6,12 +6,12 @@ import { ListSheetUseCase } from './list'
 describe('List sheets use case', () => {
   let sheetRepository: InMemorySheetRepository
   let createSheetUseCase: CreateSheetUseCase
-  let listSheetsUseCase: ListSheetUseCase
+  let sut: ListSheetUseCase
 
   beforeEach(() => {
     sheetRepository = new InMemorySheetRepository()
     createSheetUseCase = new CreateSheetUseCase(sheetRepository)
-    listSheetsUseCase = new ListSheetUseCase(sheetRepository)
+    sut = new ListSheetUseCase(sheetRepository)
   })
 
 	it('should be able to list created sheets', async () => {
@@ -26,7 +26,7 @@ describe('List sheets use case', () => {
       })
     ])
 
-    const sheets = await listSheetsUseCase.execute({ userId: 'user-1' })
+    const sheets = await sut.execute({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(2)
     expect(sheets.data[0].name).toBe('Sheet 1')
     expect(sheets.data[1].name).toBe('Sheet 2')
@@ -40,12 +40,12 @@ describe('List sheets use case', () => {
       })
     ])
 
-    const sheets = await listSheetsUseCase.execute({ userId: 'user-1' })
+    const sheets = await sut.execute({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(0)
   })
 
   it('should return an empty array if no sheets are found', async () => {
-    const sheets = await listSheetsUseCase.execute({ userId: 'user-1' })
+    const sheets = await sut.execute({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(0)
   })
 })
