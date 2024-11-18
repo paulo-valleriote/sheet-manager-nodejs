@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { CreateUserUseCase } from './create'
 import { ListUserUseCase } from './list'
+import { CryptHandler } from '@/lib/crypt-handler'
 
 describe('List users use case', () => {
   let userRepository: InMemoryUserRepository
@@ -10,7 +11,7 @@ describe('List users use case', () => {
 
   beforeEach(() => {
     userRepository = new InMemoryUserRepository()
-    createUserUseCase = new CreateUserUseCase(userRepository)
+    createUserUseCase = new CreateUserUseCase(userRepository, new CryptHandler())
     sut = new ListUserUseCase(userRepository)
   })
 
