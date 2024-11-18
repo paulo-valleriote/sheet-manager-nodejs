@@ -1,9 +1,23 @@
 import Fastify from 'fastify'
-import { ENV } from '@env'
+import fastifyCookie from '@fastify/cookie'
+import fastifyJwt from '@fastify/jwt'
 import { ZodError } from 'zod'
+import { ENV } from '@env'
 
 const app = Fastify({
 	logger: ENV.NODE_ENV === 'dev',
+})
+
+app.register(fastifyCookie)
+app.register(fastifyJwt, {
+	secret: ENV.JWT_SECRET,
+	cookie: {
+		cookieName: 'refreshToken',
+		signed: false,
+	},
+	sign: {
+		expiresIn: '10m',
+	},
 })
 
 app.get('/', (request, response) => {
