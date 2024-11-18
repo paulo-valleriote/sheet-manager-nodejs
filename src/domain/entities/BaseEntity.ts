@@ -1,5 +1,8 @@
 export interface IBaseEntity {
 	id: string
 	createdAt: Date
-	updatedAt: Date
+}
+
+export interface IBaseEntityWithUpdatedAt extends IBaseEntity {
+	updatedAt?: Date
 }

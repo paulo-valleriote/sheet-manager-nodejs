@@ -1,6 +1,7 @@
-import type { IBaseEntity } from './BaseEntity'
+import type { IBaseEntityWithUpdatedAt } from './BaseEntity'
 
-export interface IUser extends IBaseEntity {
+export interface IUser extends IBaseEntityWithUpdatedAt {
 	email: string
 	passwordHash: string
 }
+  
