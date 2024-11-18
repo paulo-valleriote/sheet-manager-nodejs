@@ -20,14 +20,8 @@ export class InMemorySheetRepository implements ISheetsRepository {
       && sheet.userId === data.userId
     )
 
-    if (!sheet) {
-      return {
-        data: null
-      }
-    }
-
     return {
-      data: sheet
+      data: sheet ?? null
     }
   }
 
@@ -37,7 +31,6 @@ export class InMemorySheetRepository implements ISheetsRepository {
       name: data.name,
       userId: data.userId,
       createdAt: new Date(),
-      updatedAt: new Date()
     })
   }
 
