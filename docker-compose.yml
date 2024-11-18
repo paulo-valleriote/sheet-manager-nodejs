@@ -1,0 +1,9 @@
+services:
+  sheet-manager-db:
+    image: bitnami/postgresql:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+    ports:
+      - 5432:5432
