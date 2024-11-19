@@ -5,6 +5,6 @@ import { AuthenticateUserUseCase } from '../authenticate/authenticate'
 export function makeAuthenticateUserUseCase() {
   const userRepository = new PrismaUsersRepository()
   const cryptHandler = new CryptHandler()
-  
+
   return new AuthenticateUserUseCase(userRepository, cryptHandler)
 }
