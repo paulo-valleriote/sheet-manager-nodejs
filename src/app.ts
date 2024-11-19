@@ -3,11 +3,14 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import { ZodError } from 'zod'
 import { ENV } from '@env'
+import { userRoutes } from './http/controllers/users/routes'
 
+// App Configuration
 const app = Fastify({
 	logger: ENV.NODE_ENV === 'dev',
 })
 
+// Plugins
 app.register(fastifyCookie)
 app.register(fastifyJwt, {
 	secret: ENV.JWT_SECRET,
@@ -20,9 +23,8 @@ app.register(fastifyJwt, {
 	},
 })
 
-app.get('/', (request, response) => {
-	return 'Hello World!'
-})
+// Routes
+app.register(userRoutes)
 
 // Global error handler
 app.setErrorHandler((error, _, reply) => {
