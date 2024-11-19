@@ -1,8 +1,8 @@
-import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 import { ListUserUseCase } from '../list/list'
 
 export function makeListUserUseCase() {
-  const userRepository = new InMemoryUserRepository()
+  const userRepository = new PrismaUsersRepository()
 
   return new ListUserUseCase(userRepository)
 }

@@ -1,8 +1,8 @@
-import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
+import { PrismaSheetsRepository } from '@/repositories/prisma/prisma-sheets-repository'
 import { UpdateSheetUseCase } from '../update'
 
 export function makeUpdateSheetUseCase() {
-  const sheetsRepository = new InMemorySheetRepository()
+  const sheetsRepository = new PrismaSheetsRepository()
 
   return new UpdateSheetUseCase(sheetsRepository)
 }

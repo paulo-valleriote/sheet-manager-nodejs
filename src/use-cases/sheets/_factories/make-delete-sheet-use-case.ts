@@ -1,8 +1,8 @@
-import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
+import { PrismaSheetsRepository } from '@/repositories/prisma/prisma-sheets-repository'
 import { DeleteSheetUseCase } from '../delete'
 
 export function makeDeleteSheetUseCase() {
-  const sheetsRepository = new InMemorySheetRepository()
+  const sheetsRepository = new PrismaSheetsRepository()
 
   return new DeleteSheetUseCase(sheetsRepository)
 }
