@@ -18,10 +18,12 @@ describe('List sheets use case', () => {
     await Promise.all([
       createSheetUseCase.execute({
         name: 'Sheet 1',
+        owner: 'user',
         userId: 'user-1',
       }),
       createSheetUseCase.execute({
         name: 'Sheet 2',
+        owner: 'user',
         userId: 'user-1',
       }),
     ])
@@ -36,6 +38,7 @@ describe('List sheets use case', () => {
     await Promise.all([
       createSheetUseCase.execute({
         name: 'Sheet 2',
+        owner: 'user',
         userId: 'user-2',
       }),
     ])

@@ -8,6 +8,12 @@ interface IListSheetsParams extends Pick<ISheetReadonlyOperationParams, 'userId'
 
 interface ICreateSheetParams {
   name: string
+  owner: string
+  age?: number
+  specie?: string
+  characterClass?: string
+  active?: boolean
+  isEditable?: boolean
   userId: string
 }
 

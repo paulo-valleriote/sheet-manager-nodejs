@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { ISheet } from '@/domain/entities/Sheet'
+import type { ISheet } from '@/domain/entities/sheet'
 import type {
   ICreateSheetParams,
   IDeleteSheetParams,
@@ -34,6 +34,12 @@ export class InMemorySheetRepository implements ISheetsRepository {
     this.sheets.push({
       id: randomUUID(),
       name: data.name,
+      owner: data.owner,
+      age: data.age ?? null,
+      specie: data.specie ?? null,
+      characterClass: data.characterClass ?? null,
+      active: data.active ?? true,
+      isEditable: data.isEditable ?? true,
       userId: data.userId,
       createdAt: new Date(),
     })

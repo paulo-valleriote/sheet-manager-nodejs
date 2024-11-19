@@ -17,6 +17,7 @@ describe('Get sheet use case', () => {
   it('should be able to get a sheet', async () => {
     await createSheetUseCase.execute({
       name: 'Sheet 1',
+      owner: 'user',
       userId: 'user-1',
     })
 
@@ -34,6 +35,7 @@ describe('Get sheet use case', () => {
   it('should not be able to get a sheet from another user', async () => {
     await createSheetUseCase.execute({
       name: 'Sheet 1',
+      owner: 'user',
       userId: 'user-2',
     })
 

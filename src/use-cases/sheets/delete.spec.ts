@@ -17,6 +17,7 @@ describe('Delete sheet use case', () => {
   it('should be able to delete a sheet', async () => {
     await createSheetUseCase.execute({
       name: 'Sheet 1',
+      owner: 'user',
       userId: 'user-1',
     })
 

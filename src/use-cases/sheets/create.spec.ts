@@ -14,6 +14,7 @@ describe('Create sheet use case', () => {
   it('should be able to create a sheet', async () => {
     await sut.execute({
       name: 'Sheet 1',
+      owner: 'user',
       userId: 'user-1',
     })
 
