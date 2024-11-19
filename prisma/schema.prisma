@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Sheet {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   userId    String   @map("user_id")
   createdAt DateTime @default(now()) @map("created_at")
@@ -25,7 +25,7 @@ model Sheet {
 }
 
 model User {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   email        String   @unique
   passwordHash String   @map("password_hash")
   createdAt    DateTime @default(now()) @map("created_at")
