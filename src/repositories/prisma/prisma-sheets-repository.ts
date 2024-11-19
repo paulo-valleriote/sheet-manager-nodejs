@@ -46,11 +46,20 @@ export class PrismaSheetsRepository implements ISheetsRepository {
   }
 
   async update(data: IUpdateSheetParams): Promise<void> {
+    const { sheetId, userId, ...updateData } = data
+
     await prisma.sheet.update({
       where: {
-        id: data.sheetId,
+        id: sheetId,
+        AND: {
+          user: {
+            id: userId,
+          },
+        },
       },
-      data,
+      data: {
+        ...updateData,
+      },
     })
   }
 }
