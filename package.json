@@ -1,6 +1,6 @@
 {
   "name": "sheet-manager-nodejs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "server.js",
   "scripts": {
     "build": "tsup src --out-dir build",
@@ -19,8 +19,8 @@
     "test:e2e:watch": "vitest watch --dir src/http",
     "test:coverage": "vitest run --coverage"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["nodejs", "fastify", "prisma", "typescript", "jwt", "bcryptjs", "zod", "rpg", "sheets"],
+  "author": "Paulo Valleriote",
   "license": "ISC",
   "description": "",
   "dependencies": {
