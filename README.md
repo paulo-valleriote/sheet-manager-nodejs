@@ -10,6 +10,6 @@ RPG management API
   - [X] Sheet unit tests
   - [ ] Sheet E2E tests
 - [ ] Implement database (PostgreSQL + PrismaORM)
-- [ ] Users CRUD
-- [ ] Auth (JWT)
+- [X] Users CRUD
+- [X] Auth (JWT)
 - [ ] Docs (Swagger)
