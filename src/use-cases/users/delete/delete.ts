@@ -1,5 +1,5 @@
-import type { IUsersRepository } from '@/repositories/users-repository'
 import type { IDeleteUserParams } from '@/repositories/@types/users'
+import type { IUsersRepository } from '@/repositories/users-repository'
 import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
 
 export class DeleteUserUseCase {

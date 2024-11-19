@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto'
 import type { ISheet } from '@/domain/entities/Sheet'
-import type { ISheetsRepository } from '../sheets-repository'
 import type {
   ICreateSheetParams,
   IDeleteSheetParams,
@@ -10,6 +9,7 @@ import type {
   IListSheetsResponse,
   IUpdateSheetParams,
 } from '../@types/sheets'
+import type { ISheetsRepository } from '../sheets-repository'
 
 export class InMemorySheetRepository implements ISheetsRepository {
   private sheets: ISheet[] = []

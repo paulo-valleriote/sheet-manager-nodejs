@@ -1,6 +1,6 @@
+import { makeDeleteSheetUseCase } from '@/use-cases/sheets/_factories/make-delete-sheet-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeDeleteSheetUseCase } from '@/use-cases/sheets/_factories/make-delete-sheet-use-case'
 
 export async function deleteSheet(request: FastifyRequest, reply: FastifyReply) {
   const { sheetId, userId } = parseRequest(request)

@@ -1,6 +1,6 @@
 import { CryptHandler } from '@/lib/crypt-handler'
-import { CreateUserUseCase } from '../create/create'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
+import { CreateUserUseCase } from '../create/create'
 
 export function makeCreateUserUseCase() {
   const userRepository = new InMemoryUserRepository()

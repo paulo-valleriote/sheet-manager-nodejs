@@ -1,8 +1,8 @@
-import Fastify from 'fastify'
+import { ENV } from '@env'
 import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
+import Fastify from 'fastify'
 import { ZodError } from 'zod'
-import { ENV } from '@env'
 import { userRoutes } from './http/controllers/users/_routes'
 
 // App Configuration

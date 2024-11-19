@@ -1,5 +1,5 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { IDeleteSheetParams } from '@/repositories/@types/sheets'
+import type { ISheetsRepository } from '@/repositories/sheets-repository'
 
 export class DeleteSheetUseCase {
   constructor(private sheetsRepository: ISheetsRepository) {}

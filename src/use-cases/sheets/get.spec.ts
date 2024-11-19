@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateSheetUseCase } from './create'
 import { GetSheetUseCase } from './get'
 

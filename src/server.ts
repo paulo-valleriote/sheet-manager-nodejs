@@ -1,5 +1,5 @@
-import app from './app'
 import { ENV } from '@env'
+import app from './app'
 
 try {
   app.listen({ port: ENV.PORT }, () => {

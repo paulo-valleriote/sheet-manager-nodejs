@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { CryptHandler } from '@/lib/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { CreateUserUseCase } from '../create/create'
 import { ListUserUseCase } from './list'
-import { CryptHandler } from '@/lib/crypt-handler'
 
 describe('List users use case', () => {
   let userRepository: InMemoryUserRepository

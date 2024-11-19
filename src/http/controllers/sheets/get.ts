@@ -1,6 +1,6 @@
+import { makeGetSheetUseCase } from '@/use-cases/sheets/_factories/make-get-sheet-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeGetSheetUseCase } from '@/use-cases/sheets/_factories/make-get-sheet-use-case'
 
 export async function getSheet(request: FastifyRequest, reply: FastifyReply) {
   const { sheetId, userId } = parseRequest(request)

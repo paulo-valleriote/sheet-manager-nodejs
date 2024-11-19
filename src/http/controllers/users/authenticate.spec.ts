@@ -1,6 +1,6 @@
-import { afterAll, beforeAll, describe, it, expect } from 'vitest'
-import request from 'supertest'
 import app from '@/app'
+import request from 'supertest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Authenticate Controller', () => {
   beforeAll(async () => {

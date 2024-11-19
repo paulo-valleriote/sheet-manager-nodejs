@@ -1,8 +1,8 @@
-import type { FastifyRequest, FastifyReply } from 'fastify'
-import { z } from 'zod'
 import { FastifyJwtHandler } from '@/lib/fastify-jwt-handler'
-import { makeAuthenticateUserUseCase } from '@/use-cases/users/_factories/make-authenticate-user-use-case'
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
+import { makeAuthenticateUserUseCase } from '@/use-cases/users/_factories/make-authenticate-user-use-case'
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
 
 export async function autheticate(request: FastifyRequest, reply: FastifyReply) {
   const authenticateBodySchema = z.object({

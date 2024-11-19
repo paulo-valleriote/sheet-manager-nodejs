@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
-import { GetUserUseCase } from './get'
-import { CreateUserUseCase } from '../create/create'
 import { CryptHandler } from '@/lib/crypt-handler'
+import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
+import { CreateUserUseCase } from '../create/create'
+import { GetUserUseCase } from './get'
 
 describe('Get user use case', () => {
   let userRepository: InMemoryUserRepository

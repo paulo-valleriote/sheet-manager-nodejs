@@ -1,10 +1,10 @@
+import { verifyJwt } from '@/http/middlewares/auth/verify-jwt'
 import type { FastifyInstance } from 'fastify'
 import { createSheet } from './create'
-import { listSheets } from './list'
-import { getSheet } from './get'
 import { deleteSheet } from './delete'
+import { getSheet } from './get'
+import { listSheets } from './list'
 import { updateSheet } from './update'
-import { verifyJwt } from '@/http/middlewares/auth/verify-jwt'
 
 export async function sheetsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJwt)

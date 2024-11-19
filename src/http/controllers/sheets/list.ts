@@ -1,6 +1,6 @@
+import { makeListSheetUseCase } from '@/use-cases/sheets/_factories/make-list-sheet-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { makeListSheetUseCase } from '@/use-cases/sheets/_factories/make-list-sheet-use-case'
 
 export async function listSheets(request: FastifyRequest, reply: FastifyReply) {
   const { userId } = parseRequest(request)

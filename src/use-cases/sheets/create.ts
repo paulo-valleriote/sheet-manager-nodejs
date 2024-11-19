@@ -1,5 +1,5 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { ICreateSheetParams } from '@/repositories/@types/sheets'
+import type { ISheetsRepository } from '@/repositories/sheets-repository'
 
 export class CreateSheetUseCase {
   constructor(private sheetsRepository: ISheetsRepository) {}

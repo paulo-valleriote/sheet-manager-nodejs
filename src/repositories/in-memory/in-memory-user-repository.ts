@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto'
 import type { IUser } from '@/domain/entities/User'
-import type { IUsersRepository } from '../users-repository'
 import type {
   ICreateUserParams,
   IDeleteUserParams,
@@ -9,6 +8,7 @@ import type {
   IListUsersResponse,
   IUpdateUserParams,
 } from '../@types/users'
+import type { IUsersRepository } from '../users-repository'
 
 export class InMemoryUserRepository implements IUsersRepository {
   private users: IUser[] = []

@@ -1,5 +1,5 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { IUpdateSheetParams } from '@/repositories/@types/sheets'
+import type { ISheetsRepository } from '@/repositories/sheets-repository'
 
 export class UpdateSheetUseCase {
   constructor(private sheetsRepository: ISheetsRepository) {}

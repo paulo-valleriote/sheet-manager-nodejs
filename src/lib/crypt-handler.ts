@@ -1,5 +1,5 @@
-import bcrypt from 'bcryptjs'
 import type { ICryptHandler } from '@/lib/@types/crypt'
+import bcrypt from 'bcryptjs'
 
 export class CryptHandler implements ICryptHandler {
   async hash(password: string) {
