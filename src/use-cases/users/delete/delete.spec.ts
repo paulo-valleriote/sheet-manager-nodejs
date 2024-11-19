@@ -15,26 +15,28 @@ describe('Delete user use case', () => {
     sut = new DeleteUserUseCase(userRepository)
   })
 
-	it('should be able to delete a user', async () => {
-		await createUserUseCase.execute({
-			email: 'user@example.com',
-			password: 'password'
-		})
+  it('should be able to delete a user', async () => {
+    await createUserUseCase.execute({
+      email: 'user@example.com',
+      password: 'password',
+    })
 
     const usersLengthBeforeDelete = await userRepository.list()
     const createdUserId = usersLengthBeforeDelete.data[0].id
 
     await sut.execute({
-      userId: createdUserId
+      userId: createdUserId,
     })
 
     const usersLengthAfterDelete = await userRepository.list()
     expect(usersLengthAfterDelete.data).toHaveLength(0)
-	})
+  })
 
   it('should not be able to delete a user that does not exist', async () => {
-    await expect(sut.execute({
-      userId: 'user-1'
-    })).rejects.toBeInstanceOf(ResourceNotFoundError)
+    await expect(
+      sut.execute({
+        userId: 'user-1',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

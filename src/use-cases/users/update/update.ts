@@ -1,19 +1,19 @@
-import type { IUsersRepository } from "@/repositories/users-repository";
-import type { IUpdateUserParams } from "@/repositories/@types/users";
-import { ResourceNotFoundError } from "../../errors/resource-not-found-error";
+import type { IUsersRepository } from '@/repositories/users-repository'
+import type { IUpdateUserParams } from '@/repositories/@types/users'
+import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
 
 export class UpdateUserUseCase {
-	constructor(private userRepository: IUsersRepository) {}
+  constructor(private userRepository: IUsersRepository) {}
 
-	async execute(data: IUpdateUserParams) {
-		const user = await this.userRepository.getById({
-			userId: data.userId
-		})
+  async execute(data: IUpdateUserParams) {
+    const user = await this.userRepository.getById({
+      userId: data.userId,
+    })
 
-		if (!user.data) {
-			throw new ResourceNotFoundError()
-		}
+    if (!user.data) {
+      throw new ResourceNotFoundError()
+    }
 
-		await this.userRepository.update(data)
-	}
+    await this.userRepository.update(data)
+  }
 }

@@ -3,7 +3,7 @@ import 'dotenv/config'
 import { randomUUID } from 'node:crypto'
 import { execSync } from 'node:child_process'
 import { PrismaClient } from '@prisma/client'
-import type{ Environment } from 'vitest/environments'
+import type { Environment } from 'vitest/environments'
 
 const prisma = new PrismaClient()
 
@@ -19,7 +19,7 @@ function generateDatabaseURL(schema: string) {
   return url.toString()
 }
 
-export default <Environment>({
+export default (<Environment>{
   name: 'prisma',
   transformMode: 'ssr',
   async setup() {
@@ -34,9 +34,7 @@ export default <Environment>({
     return {
       // executed after tests end
       async teardown() {
-        await prisma.$executeRawUnsafe(
-          `DROP SCHEMA IF EXISTS "${schema}" CASCADE`,
-        )
+        await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`)
 
         await prisma.$disconnect()
       },

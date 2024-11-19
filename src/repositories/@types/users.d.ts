@@ -9,30 +9,30 @@ interface IGetUserParams extends IUserReadonlyOperationParams {
 }
 
 interface ICreateUserParams {
-	email: string
-	passwordHash: string
+  email: string
+  passwordHash: string
 }
 
 interface IUpdateUserParams extends IUserReadonlyOperationParams {
-	email: string
+  email: string
 }
 
 interface IDeleteUserParams extends IUserReadonlyOperationParams {}
 
 interface IGetUserResponse {
-	data: IUser | null
+  data: IUser | null
 }
 
 interface IListUsersResponse {
-	data: IUser[]
+  data: IUser[]
 }
 
 export type {
-	IGetUserParams,
-	IGetUserResponse,
-	IListUsersParams,
-	IListUsersResponse,
-	ICreateUserParams,
-	IUpdateUserParams,
-	IDeleteUserParams
+  IGetUserParams,
+  IGetUserResponse,
+  IListUsersParams,
+  IListUsersResponse,
+  ICreateUserParams,
+  IUpdateUserParams,
+  IDeleteUserParams,
 }

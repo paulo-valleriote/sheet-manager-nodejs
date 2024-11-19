@@ -3,24 +3,24 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import { ZodError } from 'zod'
 import { ENV } from '@env'
-import { userRoutes } from './http/controllers/users/routes'
+import { userRoutes } from './http/controllers/users/_routes'
 
 // App Configuration
 const app = Fastify({
-	logger: ENV.NODE_ENV === 'dev',
+  logger: ENV.NODE_ENV === 'dev',
 })
 
 // Plugins
 app.register(fastifyCookie)
 app.register(fastifyJwt, {
-	secret: ENV.JWT_SECRET,
-	cookie: {
-		cookieName: 'refreshToken',
-		signed: false,
-	},
-	sign: {
-		expiresIn: '10m',
-	},
+  secret: ENV.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
 })
 
 // Routes

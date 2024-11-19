@@ -1,7 +1,15 @@
-import { randomUUID } from 'node:crypto';
-import type { ISheet } from '@/domain/entities/Sheet';
-import type { ISheetsRepository } from '../sheets-repository';
-import type { ICreateSheetParams, IDeleteSheetParams, IGetSheetParams, IGetSheetResponse, IListSheetsParams, IListSheetsResponse, IUpdateSheetParams } from '../@types/sheets';
+import { randomUUID } from 'node:crypto'
+import type { ISheet } from '@/domain/entities/Sheet'
+import type { ISheetsRepository } from '../sheets-repository'
+import type {
+  ICreateSheetParams,
+  IDeleteSheetParams,
+  IGetSheetParams,
+  IGetSheetResponse,
+  IListSheetsParams,
+  IListSheetsResponse,
+  IUpdateSheetParams,
+} from '../@types/sheets'
 
 export class InMemorySheetRepository implements ISheetsRepository {
   private sheets: ISheet[] = []
@@ -10,18 +18,15 @@ export class InMemorySheetRepository implements ISheetsRepository {
     const sheets = this.sheets.filter((sheet) => sheet.userId === data.userId)
 
     return {
-      data: sheets
+      data: sheets,
     }
   }
 
   async get(data: IGetSheetParams): Promise<IGetSheetResponse> {
-    const sheet = this.sheets.find((sheet) => 
-      sheet.id === data.sheetId
-      && sheet.userId === data.userId
-    )
+    const sheet = this.sheets.find((sheet) => sheet.id === data.sheetId && sheet.userId === data.userId)
 
     return {
-      data: sheet ?? null
+      data: sheet ?? null,
     }
   }
 
@@ -35,23 +40,17 @@ export class InMemorySheetRepository implements ISheetsRepository {
   }
 
   async update(data: IUpdateSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => 
-      sheet.id === data.sheetId
-      && sheet.userId === data.userId
-    )
+    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId && sheet.userId === data.userId)
 
     this.sheets[sheetIndex] = {
       ...this.sheets[sheetIndex],
       ...data,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }
-	}
-  
+  }
+
   async delete(data: IDeleteSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => 
-      sheet.id === data.sheetId
-      && sheet.userId === data.userId
-    )
+    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId && sheet.userId === data.userId)
 
     this.sheets.splice(sheetIndex, 1)
   }

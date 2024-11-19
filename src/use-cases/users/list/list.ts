@@ -1,9 +1,9 @@
-import type { IUsersRepository } from "@/repositories/users-repository";
+import type { IUsersRepository } from '@/repositories/users-repository'
 
 export class ListUserUseCase {
-	constructor(private userRepository: IUsersRepository) {}
+  constructor(private userRepository: IUsersRepository) {}
 
-	async execute() {
-		return await this.userRepository.list()
-	}
+  async execute() {
+    return await this.userRepository.list()
+  }
 }

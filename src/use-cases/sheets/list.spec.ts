@@ -14,30 +14,30 @@ describe('List sheets use case', () => {
     sut = new ListSheetUseCase(sheetRepository)
   })
 
-	it('should be able to list created sheets', async () => {
+  it('should be able to list created sheets', async () => {
     await Promise.all([
       createSheetUseCase.execute({
         name: 'Sheet 1',
-        userId: 'user-1'
+        userId: 'user-1',
       }),
       createSheetUseCase.execute({
         name: 'Sheet 2',
-        userId: 'user-1'
-      })
+        userId: 'user-1',
+      }),
     ])
 
     const sheets = await sut.execute({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(2)
     expect(sheets.data[0].name).toBe('Sheet 1')
     expect(sheets.data[1].name).toBe('Sheet 2')
-	})
+  })
 
   it('should not be able to list sheets from another user', async () => {
     await Promise.all([
       createSheetUseCase.execute({
         name: 'Sheet 2',
-        userId: 'user-2'
-      })
+        userId: 'user-2',
+      }),
     ])
 
     const sheets = await sut.execute({ userId: 'user-1' })

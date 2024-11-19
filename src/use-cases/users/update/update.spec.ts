@@ -16,11 +16,11 @@ describe('Update user use case', () => {
     sut = new UpdateUserUseCase(userRepository)
   })
 
-	it('should be able to update a user', async () => {
-		await createUserUseCase.execute({
-			email: 'user1@example.com',
-			password: 'password'
-		})
+  it('should be able to update a user', async () => {
+    await createUserUseCase.execute({
+      email: 'user1@example.com',
+      password: 'password',
+    })
 
     const usersLenght = await userRepository.list()
 
@@ -32,12 +32,14 @@ describe('Update user use case', () => {
     const users = await userRepository.list()
     expect(users.data).toHaveLength(1)
     expect(users.data[0].email).toBe('user2@example.com')
-	})
+  })
 
   it('should not be able to update a non existing user', async () => {
-    await expect(sut.execute({
-      userId: 'invalid-user-id',
-      email: 'user2@example.com',
-    })).rejects.toBeInstanceOf(ResourceNotFoundError)
+    await expect(
+      sut.execute({
+        userId: 'invalid-user-id',
+        email: 'user2@example.com',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

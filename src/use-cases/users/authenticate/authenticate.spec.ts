@@ -17,12 +17,12 @@ describe('Authenticate user use case', () => {
   it('should be able to authenticate a user', async () => {
     await userRepository.create({
       email: 'user@example.com',
-      passwordHash: await cryptHandler.hash('password')
+      passwordHash: await cryptHandler.hash('password'),
     })
 
     const { user } = await sut.execute({
       email: 'user@example.com',
-      password: 'password'
+      password: 'password',
     })
 
     expect(user).toHaveProperty('id')
@@ -30,21 +30,25 @@ describe('Authenticate user use case', () => {
   })
 
   it('should not be able to authenticate with wrong email', async () => {
-    await expect(sut.execute({
-      email: 'user@example.com',
-      password: 'password'
-    })).rejects.toBeInstanceOf(Error)
+    await expect(
+      sut.execute({
+        email: 'user@example.com',
+        password: 'password',
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 
   it('should not be able to authenticate with wrong password', async () => {
     await userRepository.create({
       email: 'user@example.com',
-      passwordHash: await cryptHandler.hash('password')
+      passwordHash: await cryptHandler.hash('password'),
     })
 
-    await expect(sut.execute({
-      email: 'user@example.com',
-      password: 'wrong-password'
-    })).rejects.toBeInstanceOf(Error)
+    await expect(
+      sut.execute({
+        email: 'user@example.com',
+        password: 'wrong-password',
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })

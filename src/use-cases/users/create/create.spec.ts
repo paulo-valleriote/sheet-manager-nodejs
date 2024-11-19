@@ -13,27 +13,29 @@ describe('Create user use case', () => {
     sut = new CreateUserUseCase(userRepository, new CryptHandler())
   })
 
-	it('should be able to create a user', async () => {
-		await sut.execute({
-			email: 'user@example.com',
-			password: 'password'
-		})
+  it('should be able to create a user', async () => {
+    await sut.execute({
+      email: 'user@example.com',
+      password: 'password',
+    })
 
     const usersLenght = await userRepository.list()
     expect(usersLenght.data).toHaveLength(1)
     expect(usersLenght.data[0].email).toBe('user@example.com')
     expect(usersLenght.data[0].passwordHash).not.toBe('password')
-	})
+  })
 
   it('should not be able to create a user with same email twice', async () => {
     await sut.execute({
       email: 'user@example.com',
-      password: 'password'
+      password: 'password',
     })
 
-    await expect(sut.execute({
-      email: 'user@example.com',
-      password: 'password'
-    })).rejects.toBeInstanceOf(UserAlreadyExistsError)
+    await expect(
+      sut.execute({
+        email: 'user@example.com',
+        password: 'password',
+      }),
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })

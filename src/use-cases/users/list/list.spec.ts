@@ -15,25 +15,25 @@ describe('List users use case', () => {
     sut = new ListUserUseCase(userRepository)
   })
 
-	it('should be able to list created users', async () => {
+  it('should be able to list created users', async () => {
     await Promise.all([
       createUserUseCase.execute({
         email: 'user1@example.com',
-        password: 'password'
+        password: 'password',
       }),
       createUserUseCase.execute({
         email: 'user2@example.com',
-        password: 'password'
-      })
+        password: 'password',
+      }),
     ])
 
     const users = await sut.execute()
     expect(users.data).toHaveLength(2)
     expect(users.data).toEqual([
-      expect.objectContaining({email: expect.any(String)}),
-      expect.objectContaining({email: expect.any(String)})
+      expect.objectContaining({ email: expect.any(String) }),
+      expect.objectContaining({ email: expect.any(String) }),
     ])
-	})
+  })
 
   it('should return an empty array if no users are found', async () => {
     const users = await sut.execute()

@@ -1,8 +1,8 @@
-import type { IUser } from "@/domain/entities/User";
-import type { ICryptHandler } from "@/lib/@types/crypt";
-import type { IUsersRepository } from "@/repositories/users-repository";
-import { ResourceNotFoundError } from "../../errors/resource-not-found-error";
-import { InvalidCredentialsError } from "../../errors/invalid-credentials-error";
+import type { IUser } from '@/domain/entities/User'
+import type { ICryptHandler } from '@/lib/@types/crypt'
+import type { IUsersRepository } from '@/repositories/users-repository'
+import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
+import { InvalidCredentialsError } from '../../errors/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
   email: string
@@ -16,7 +16,7 @@ interface AuthenticateUseCaseResponse {
 export class AuthenticateUserUseCase {
   constructor(
     private userRepository: IUsersRepository,
-    private cryptHandler: ICryptHandler
+    private cryptHandler: ICryptHandler,
   ) {}
 
   async execute(data: AuthenticateUseCaseRequest): Promise<AuthenticateUseCaseResponse> {
@@ -34,7 +34,7 @@ export class AuthenticateUserUseCase {
 
     const { passwordHash, ...userWithoutPasswordHash } = user.data
     return {
-      user: userWithoutPasswordHash
+      user: userWithoutPasswordHash,
     }
   }
 }

@@ -16,25 +16,27 @@ describe('Get user use case', () => {
     sut = new GetUserUseCase(userRepository)
   })
 
-	it('should be able to get a user', async () => {
-		await createUserUseCase.execute({
-			email: 'user@example.com',
-			password: 'password'
-		})
+  it('should be able to get a user', async () => {
+    await createUserUseCase.execute({
+      email: 'user@example.com',
+      password: 'password',
+    })
 
     const users = await userRepository.list()
     const userId = users.data[0].id
 
     const user = await sut.execute({
-      userId
+      userId,
     })
 
     expect(user.data?.email).toBe('user@example.com')
-	})
+  })
 
   it('should thorw ResourceNotFoundError if user not found', async () => {
-    await expect(sut.execute({
-      userId: 'user-1'
-    })).rejects.toBeInstanceOf(ResourceNotFoundError)
+    await expect(
+      sut.execute({
+        userId: 'user-1',
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

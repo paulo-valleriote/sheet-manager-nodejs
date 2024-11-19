@@ -4,33 +4,33 @@ interface ISheetReadonlyOperationParams {
 }
 
 interface IGetSheetParams extends ISheetReadonlyOperationParams {}
-interface IListSheetsParams extends Pick<ISheetReadonlyOperationParams, "userId"> {}
+interface IListSheetsParams extends Pick<ISheetReadonlyOperationParams, 'userId'> {}
 
 interface ICreateSheetParams {
-	name: string
-	userId: string
+  name: string
+  userId: string
 }
 
 interface IUpdateSheetParams extends ISheetReadonlyOperationParams {
-	name: string
+  name: string
 }
 
 interface IDeleteSheetParams extends ISheetReadonlyOperationParams {}
 
 interface IGetSheetResponse {
-	data: ISheet | null
+  data: ISheet | null
 }
 
 interface IListSheetsResponse {
-	data: ISheet[]
+  data: ISheet[]
 }
 
 export type {
-	IGetSheetParams,
-	IGetSheetResponse,
-	IListSheetsParams,
-	IListSheetsResponse,
-	ICreateSheetParams,
-	IUpdateSheetParams,
-	IDeleteSheetParams
+  IGetSheetParams,
+  IGetSheetResponse,
+  IListSheetsParams,
+  IListSheetsResponse,
+  ICreateSheetParams,
+  IUpdateSheetParams,
+  IDeleteSheetParams,
 }

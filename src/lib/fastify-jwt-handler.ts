@@ -1,17 +1,11 @@
-import type { FastifyReply } from "fastify";
+import type { FastifyReply } from 'fastify'
 
 export class FastifyJwtHandler {
-  async sign({
-    reply,
-    signSub,
-    payload,
-    refreshToken,
-    expiresIn
-  }: JwtSignPayload): Promise<JwtSignResponse> {
+  async sign({ reply, signSub, payload, refreshToken, expiresIn }: JwtSignPayload): Promise<JwtSignResponse> {
     const token = await reply.jwtSign(payload ?? {}, {
       sign: {
-        sub: signSub
-      }
+        sub: signSub,
+      },
     })
 
     if (refreshToken) {
@@ -19,7 +13,7 @@ export class FastifyJwtHandler {
         sign: {
           sub: signSub,
           expiresIn: expiresIn ?? '7d',
-        }
+        },
       })
 
       return { token, refreshToken }

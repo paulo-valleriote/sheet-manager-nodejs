@@ -1,16 +1,16 @@
-import type { ISheetsRepository } from "@/repositories/sheets-repository";
-import type { IDeleteSheetParams } from "@/repositories/@types/sheets";
+import type { ISheetsRepository } from '@/repositories/sheets-repository'
+import type { IDeleteSheetParams } from '@/repositories/@types/sheets'
 
 export class DeleteSheetUseCase {
-	constructor(private sheetsRepository: ISheetsRepository) {}
+  constructor(private sheetsRepository: ISheetsRepository) {}
 
-	async execute(data: IDeleteSheetParams) {
-		const sheet = await this.sheetsRepository.get(data)
+  async execute(data: IDeleteSheetParams) {
+    const sheet = await this.sheetsRepository.get(data)
 
-		if (!sheet.data) {
-			throw new Error('Sheet not found')
-		}
+    if (!sheet.data) {
+      throw new Error('Sheet not found')
+    }
 
-		await this.sheetsRepository.delete(data)
-	}
+    await this.sheetsRepository.delete(data)
+  }
 }

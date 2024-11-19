@@ -1,7 +1,14 @@
-import { randomUUID } from 'node:crypto';
-import type { IUser } from '@/domain/entities/User';
-import type { IUsersRepository } from '../users-repository';
-import type { ICreateUserParams, IDeleteUserParams, IGetUserParams, IGetUserResponse, IListUsersParams, IListUsersResponse, IUpdateUserParams } from '../@types/users';
+import { randomUUID } from 'node:crypto'
+import type { IUser } from '@/domain/entities/User'
+import type { IUsersRepository } from '../users-repository'
+import type {
+  ICreateUserParams,
+  IDeleteUserParams,
+  IGetUserParams,
+  IGetUserResponse,
+  IListUsersResponse,
+  IUpdateUserParams,
+} from '../@types/users'
 
 export class InMemoryUserRepository implements IUsersRepository {
   private users: IUser[] = []
@@ -10,7 +17,7 @@ export class InMemoryUserRepository implements IUsersRepository {
     const users = this.users
 
     return {
-      data: users
+      data: users,
     }
   }
 
@@ -18,7 +25,7 @@ export class InMemoryUserRepository implements IUsersRepository {
     const user = this.users.find((user) => user.id === data.userId)
 
     return {
-      data: user ?? null
+      data: user ?? null,
     }
   }
 
@@ -26,7 +33,7 @@ export class InMemoryUserRepository implements IUsersRepository {
     const user = this.users.find((user) => user.email === data.email)
 
     return {
-      data: user ?? null
+      data: user ?? null,
     }
   }
 
@@ -40,20 +47,16 @@ export class InMemoryUserRepository implements IUsersRepository {
   }
 
   async update(data: IUpdateUserParams): Promise<void> {
-    const userIndex = this.users.findIndex((user) => 
-      user.id === data.userId
-    )
+    const userIndex = this.users.findIndex((user) => user.id === data.userId)
 
     this.users[userIndex] = {
       ...this.users[userIndex],
       ...data,
     }
-	}
-  
+  }
+
   async delete(data: IDeleteUserParams): Promise<void> {
-    const userIndex = this.users.findIndex((user) => 
-      user.id === data.userId
-    )
+    const userIndex = this.users.findIndex((user) => user.id === data.userId)
 
     this.users.splice(userIndex, 1)
   }
