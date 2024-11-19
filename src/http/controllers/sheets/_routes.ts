@@ -11,7 +11,7 @@ export async function sheetsRoutes(app: FastifyInstance) {
 
   app.post('/sheets', createSheet)
   app.get('/sheets', listSheets)
-  app.get('/sheets/:id', getSheet)
-  app.delete('/sheets/:id', deleteSheet)
-  app.put('/sheets/:id', updateSheet)
+  app.get('/sheets/:sheetId', getSheet)
+  app.delete('/sheets/:sheetId', deleteSheet)
+  app.put('/sheets/:sheetId', updateSheet)
 }

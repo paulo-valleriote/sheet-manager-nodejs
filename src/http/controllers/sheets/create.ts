@@ -6,9 +6,9 @@ export async function createSheet(request: FastifyRequest, reply: FastifyReply) 
   const { name, userId } = parseRequest(request)
 
   const createSheetUseCase = makeCreateSheetUseCase()
-  const sheet = await createSheetUseCase.execute({ name, userId })
+  await createSheetUseCase.execute({ name, userId })
 
-  return reply.status(200).send(sheet)
+  return reply.status(201).send()
 }
 
 function parseRequest(request: FastifyRequest) {

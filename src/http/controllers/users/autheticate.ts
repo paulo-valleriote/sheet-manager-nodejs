@@ -23,6 +23,7 @@ export async function autheticate(request: FastifyRequest, reply: FastifyReply) 
     const { token, refreshToken } = await jwtHandler.sign({
       reply,
       signSub: user.id,
+      refreshToken: true,
     })
 
     if (!refreshToken) {

@@ -6,13 +6,13 @@ export async function updateSheet(request: FastifyRequest, reply: FastifyReply) 
   const { sheetId, userId, name } = parseRequest(request)
 
   const updateSheetUseCase = makeUpdateSheetUseCase()
-  const sheet = await updateSheetUseCase.execute({
+  await updateSheetUseCase.execute({
     userId,
     sheetId,
     name,
   })
 
-  return reply.status(200).send(sheet)
+  return reply.status(204).send()
 }
 
 function parseRequest(request: FastifyRequest) {

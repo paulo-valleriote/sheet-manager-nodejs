@@ -8,7 +8,7 @@ export async function listSheets(request: FastifyRequest, reply: FastifyReply) {
   const listSheetsUseCase = makeListSheetUseCase()
   const sheets = await listSheetsUseCase.execute({ userId })
 
-  return reply.status(200).send({ data: sheets })
+  return reply.status(200).send({ data: sheets.data })
 }
 
 function parseRequest(request: FastifyRequest) {

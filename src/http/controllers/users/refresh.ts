@@ -10,6 +10,7 @@ export async function refresh(request: FastifyRequest, reply: FastifyReply) {
   const { token, refreshToken } = await jwtHandler.sign({
     reply,
     signSub: request.user.sub,
+    refreshToken: true,
   })
 
   if (!refreshToken) {

@@ -13,8 +13,8 @@ export async function deleteSheet(request: FastifyRequest, reply: FastifyReply) 
 
 function parseRequest(request: FastifyRequest) {
   const deleteSheetParamsSchema = z.object({
-    sheetId: z.string().uuid(),
     userId: z.string().uuid(),
+    sheetId: z.string().uuid(),
   })
 
   return deleteSheetParamsSchema.parse(request.params)
