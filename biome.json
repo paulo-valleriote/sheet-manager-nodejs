@@ -1,56 +1,66 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": true,
-		"defaultBranch": "main"
-	},
-	"files": {
-		"ignoreUnknown": false,
-		"ignore": [".env"]
-	},
-	"formatter": {
-		"enabled": true,
-		"formatWithErrors": false,
-		"ignore": [".env", "*.json"],
-		"indentStyle": "tab",
-		"indentWidth": 2,
-		"attributePosition": "multiline"
-	},
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"complexity": {
-				"noUselessCatch": "error",
-				"noUselessConstructor": "error",
-				"noUselessEmptyExport": "error"
-			},
-			"correctness": {
-				"noConstructorReturn": "error",
-				"noEmptyPattern": "error",
-				"noConstAssign": "error",
-				"noUnusedPrivateClassMembers": "error"
-			}
-		}
-	},
-	"javascript": {
-		"linter": {
-			"enabled": true
-		},
-		"formatter": {
-			"quoteStyle": "single",
-			"semicolons": "asNeeded",
-			"trailingCommas": "all"
-		}
-	},
-	"json": {
-		"formatter": {
-			"trailingCommas": "none"
-		}
-	}
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "ignore": [".env"]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "ignore": [".env", "*.json"],
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "lineEnding": "lf"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noUnsafeDeclarationMerging": "error",
+        "noUnsafeNegation": "error",
+        "noDoubleEquals": "error",
+        "noSkippedTests": "warn",
+        "noCommentText": "info",
+        "noFallthroughSwitchClause": "error"
+      },
+      "complexity": {
+        "noUselessCatch": "error",
+        "noUselessConstructor": "error",
+        "noUselessEmptyExport": "error"
+      },
+      "correctness": {
+        "noConstructorReturn": "error",
+        "noEmptyPattern": "error",
+        "noConstAssign": "error",
+        "noUnusedPrivateClassMembers": "error",
+        "noUnusedImports": "error"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  }
 }
