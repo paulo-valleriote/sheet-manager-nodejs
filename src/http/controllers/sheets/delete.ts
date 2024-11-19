@@ -1,23 +1,21 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { makeDeleteSheetUseCase } from '@/use-cases/sheets/_factories/make-delete-sheet-use-case'
 
-export class DeleteSheetController {
-  constructor(private readonly sheetsRepository: ISheetsRepository) {}
+export async function deleteSheet(request: FastifyRequest, reply: FastifyReply) {
+  const { sheetId, userId } = parseRequest(request)
 
-  async handle(request: FastifyRequest, reply: FastifyReply) {
-    const { sheetId, userId } = this.parseRequest(request)
+  const deleteSheetUseCase = makeDeleteSheetUseCase()
+  await deleteSheetUseCase.execute({ sheetId, userId })
 
-    await this.sheetsRepository.delete({ sheetId, userId })
-    return reply.status(204).send()
-  }
+  return reply.status(204).send()
+}
 
-  private parseRequest(request: FastifyRequest) {
-    const deleteSheetParamsSchema = z.object({
-      sheetId: z.string().uuid(),
-      userId: z.string().uuid()
-    })
+function parseRequest(request: FastifyRequest) {
+  const deleteSheetParamsSchema = z.object({
+    sheetId: z.string().uuid(),
+    userId: z.string().uuid(),
+  })
 
-    return deleteSheetParamsSchema.parse(request.params)
-  }
+  return deleteSheetParamsSchema.parse(request.params)
 }

@@ -1,22 +1,20 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { makeListSheetUseCase } from '@/use-cases/sheets/_factories/make-list-sheet-use-case'
 
-export class ListSheetsController {
-  constructor(private readonly sheetsRepository: ISheetsRepository) {}
+export async function listSheets(request: FastifyRequest, reply: FastifyReply) {
+  const { userId } = parseRequest(request)
 
-  async handle(request: FastifyRequest, reply: FastifyReply) {
-    const { userId } = this.parseRequest(request)
+  const listSheetsUseCase = makeListSheetUseCase()
+  const sheets = await listSheetsUseCase.execute({ userId })
 
-    const sheets = await this.sheetsRepository.list({ userId })
-    return reply.status(200).send({ data: sheets })
-  }
+  return reply.status(200).send({ data: sheets })
+}
 
-  private parseRequest(request: FastifyRequest) {
-    const listSheetsParamsSchema = z.object({
-      userId: z.string().uuid()
-    })
+function parseRequest(request: FastifyRequest) {
+  const listSheetsParamsSchema = z.object({
+    userId: z.string().uuid(),
+  })
 
-    return listSheetsParamsSchema.parse(request.params)
-  }
+  return listSheetsParamsSchema.parse(request.params)
 }

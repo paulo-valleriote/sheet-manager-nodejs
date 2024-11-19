@@ -1,35 +1,32 @@
-import type { ISheetsRepository } from '@/repositories/sheets-repository'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
+import { makeUpdateSheetUseCase } from '@/use-cases/sheets/_factories/make-update-sheet-use-case'
 
-export class UpdateSheetController {
-  constructor(private readonly sheetsRepository: ISheetsRepository) {}
+export async function updateSheet(request: FastifyRequest, reply: FastifyReply) {
+  const { sheetId, userId, name } = parseRequest(request)
 
-  async handle(request: FastifyRequest, reply: FastifyReply) {
-    const { sheetId, userId, name } = this.parseRequest(request)
+  const updateSheetUseCase = makeUpdateSheetUseCase()
+  const sheet = await updateSheetUseCase.execute({
+    userId,
+    sheetId,
+    name,
+  })
 
-    const sheet = await this.sheetsRepository.update({ 
-      userId,
-      sheetId,
-      name
-    })
-    
-    return reply.status(200).send(sheet)
-  }
+  return reply.status(200).send(sheet)
+}
 
-  private parseRequest(request: FastifyRequest) {
-    const updateSheetParamsSchema = z.object({
-      sheetId: z.string().uuid(),
-      userId: z.string().uuid(),
-    })
+function parseRequest(request: FastifyRequest) {
+  const updateSheetParamsSchema = z.object({
+    sheetId: z.string().uuid(),
+    userId: z.string().uuid(),
+  })
 
-    const updateSheetBodySchema = z.object({
-      name: z.string().min(1)
-    })
+  const updateSheetBodySchema = z.object({
+    name: z.string().min(1),
+  })
 
-    const updateParams = updateSheetParamsSchema.parse(request.params)
-    const updateBody = updateSheetBodySchema.parse(request.body)
+  const updateParams = updateSheetParamsSchema.parse(request.params)
+  const updateBody = updateSheetBodySchema.parse(request.body)
 
-    return { ...updateParams, ...updateBody }
-  }
+  return { ...updateParams, ...updateBody }
 }
