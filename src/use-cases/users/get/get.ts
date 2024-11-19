@@ -1,5 +1,6 @@
 import type { IUsersRepository } from "@/repositories/users-repository";
 import type { IGetUserParams } from "@/repositories/@types/users";
+import { ResourceNotFoundError } from "../../errors/resource-not-found-error";
 
 export class GetUserUseCase {
 	constructor(private userRepository: IUsersRepository) {}
@@ -8,7 +9,7 @@ export class GetUserUseCase {
 		const user = await this.userRepository.getById(data)
 
     if (!user.data) {
-      throw new Error('User not found')
+      throw new ResourceNotFoundError() 
     }
 
     return user

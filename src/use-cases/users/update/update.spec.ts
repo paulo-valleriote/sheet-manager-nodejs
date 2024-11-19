@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
-import { CreateUserUseCase } from './create'
+import { CreateUserUseCase } from '../create/create'
 import { UpdateUserUseCase } from './update'
 import { CryptHandler } from '@/lib/crypt-handler'
+import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
 
 describe('Update user use case', () => {
   let userRepository: InMemoryUserRepository
@@ -33,10 +34,10 @@ describe('Update user use case', () => {
     expect(users.data[0].email).toBe('user2@example.com')
 	})
 
-  it('should not be able to update a user with invalid userId', async () => {
+  it('should not be able to update a non existing user', async () => {
     await expect(sut.execute({
       userId: 'invalid-user-id',
       email: 'user2@example.com',
-    })).rejects.toBeInstanceOf(Error)
+    })).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

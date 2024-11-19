@@ -1,8 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { DeleteUserUseCase } from './delete'
-import { CreateUserUseCase } from './create'
+import { CreateUserUseCase } from '../create/create'
 import { CryptHandler } from '@/lib/crypt-handler'
+import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
 describe('Delete user use case', () => {
   let userRepository: InMemoryUserRepository
   let createUserUseCase: CreateUserUseCase
@@ -34,18 +35,6 @@ describe('Delete user use case', () => {
   it('should not be able to delete a user that does not exist', async () => {
     await expect(sut.execute({
       userId: 'user-1'
-    })).rejects.toBeInstanceOf(Error)
-  })
-
-  it('should not be able to delete a user that does not exist', async () => {
-    await expect(sut.execute({
-      userId: 'user-2'
-    })).rejects.toBeInstanceOf(Error)
-  })
-
-  it('should not be able to delete a user that does not belong to the user', async () => {
-    await expect(sut.execute({
-      userId: 'user-2'
-    })).rejects.toBeInstanceOf(Error)
+    })).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
