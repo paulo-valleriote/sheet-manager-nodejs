@@ -13,8 +13,9 @@ interface ICreateUserParams {
   passwordHash: string
 }
 
-interface IUpdateUserParams extends IUserReadonlyOperationParams {
-  email: string
+interface IUpdateUserParams extends Partial<IUserReadonlyOperationParams> {
+  email?: string
+  passwordHash?: string
 }
 
 interface IDeleteUserParams extends IUserReadonlyOperationParams {}
