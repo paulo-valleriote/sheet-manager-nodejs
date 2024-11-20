@@ -23,11 +23,13 @@ describe('List Sheets Controller', () => {
         {
           id: sheetId,
           name: 'Sheet 1',
+          owner: userId || 'user-1',
           userId: userId || 'user-1',
         },
         {
           id: randomUUID(),
           name: 'Sheet 2',
+          owner: userId || 'user-1',
           userId: userId || 'user-1',
         },
       ],

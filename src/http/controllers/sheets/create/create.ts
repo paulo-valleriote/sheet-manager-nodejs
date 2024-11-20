@@ -3,10 +3,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function createSheet(request: FastifyRequest, reply: FastifyReply) {
-  const { name, userId } = parseRequest(request)
+  const data = parseRequest(request)
 
   const createSheetUseCase = makeCreateSheetUseCase()
-  await createSheetUseCase.execute({ name, userId })
+  await createSheetUseCase.execute(data)
 
   return reply.status(201).send()
 }
@@ -18,6 +18,7 @@ function parseRequest(request: FastifyRequest) {
 
   const createSheetBodySchema = z.object({
     name: z.string().min(1),
+    owner: z.string().min(1)
   })
 
   const createParams = createSheetParamsSchema.parse(request.params)

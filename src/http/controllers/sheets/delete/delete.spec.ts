@@ -5,7 +5,7 @@ import { createAndAuthenticateUser } from '@/utils/tests/create-and-authenticate
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-describe('Update Sheet Controller', () => {
+describe('Delete Sheet Controller', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -14,7 +14,7 @@ describe('Update Sheet Controller', () => {
     await app.close()
   })
 
-  it('should be able to update a sheet', async () => {
+  it('should be able to delete a sheet', async () => {
     const { token, id: userId } = await createAndAuthenticateUser(app)
     const sheetId = randomUUID()
 
@@ -22,16 +22,14 @@ describe('Update Sheet Controller', () => {
       data: {
         id: sheetId,
         name: 'Sheet 1',
+        owner: userId || 'user-1',
         userId: userId || 'user-1',
       },
     })
 
     const response = await request(app.server)
-      .put(`/users/${userId}/sheets/${sheetId}`)
+      .delete(`/users/${userId}/sheets/${sheetId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send({
-        name: 'Sheet 2',
-      })
 
     expect(response.statusCode).toBe(204)
   })

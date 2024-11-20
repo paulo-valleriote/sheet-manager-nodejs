@@ -5,7 +5,7 @@ import { createAndAuthenticateUser } from '@/utils/tests/create-and-authenticate
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-describe('Get Sheet Controller', () => {
+describe('Update Sheet Controller', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -14,7 +14,7 @@ describe('Get Sheet Controller', () => {
     await app.close()
   })
 
-  it('should be able to get a sheet', async () => {
+  it('should be able to update a sheet', async () => {
     const { token, id: userId } = await createAndAuthenticateUser(app)
     const sheetId = randomUUID()
 
@@ -22,20 +22,18 @@ describe('Get Sheet Controller', () => {
       data: {
         id: sheetId,
         name: 'Sheet 1',
+        owner: userId || 'user-1',
         userId: userId || 'user-1',
       },
     })
 
     const response = await request(app.server)
-      .get(`/users/${userId}/sheets/${sheetId}`)
+      .put(`/users/${userId}/sheets/${sheetId}`)
       .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'Sheet 2',
+      })
 
-    expect(response.statusCode).toBe(200)
-    expect(response.body.data).toEqual(
-      expect.objectContaining({
-        id: sheetId,
-        name: 'Sheet 1',
-      }),
-    )
+    expect(response.statusCode).toBe(204)
   })
 })
