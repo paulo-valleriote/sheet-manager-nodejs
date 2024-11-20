@@ -1,6 +1,6 @@
 import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { CreateSheetUseCase } from './create'
+import { CreateSheetUseCase } from '../create/create'
 import { GetSheetUseCase } from './get'
 
 describe('Get sheet use case', () => {
