@@ -1,14 +1,17 @@
+import { randomUUID } from 'node:crypto'
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
 import { HandleModuleContentGuardType } from '@/domain/entities/module-content'
 import type { IModuleComponent } from '@/domain/entities/module-content'
 import { InvalidBodyIntoModuleComponentError } from '@/use-cases/errors/invalid-body-into-module-component'
 import { z } from 'zod'
 
-export function verifyAndParseComponents(components: IModuleComponent[], skipContainerValidation = false) {
+export function verifyAndParseComponents(parentId: string, components: IModuleComponent[], skipContainerValidation = false) {
   const typeGuardHandler = new HandleModuleContentGuardType()
   const formattedComponents: IModuleComponent[] = []
 
   for (const component of components) {
+    component.parentId = parentId
+    
     if (typeGuardHandler.isTextComponent(component)) {
       const parsedComponent = parseAndValidateModuleComponent(component, parseTextComponent, ISheetModuleTypes.TEXT)
       formattedComponents.push(parsedComponent)
@@ -49,7 +52,7 @@ function parseAndValidateModuleComponent<T>(
 
 function parseTextComponent(component: IModuleComponent) {
   const textComponentSchema = z.object({
-    id: z.string(),
+    id: z.string().default(() => randomUUID()),
     parentId: z.string(),
     type: z.literal(ISheetModuleTypes.TEXT),
     label: z.string().min(1),
@@ -62,7 +65,7 @@ function parseTextComponent(component: IModuleComponent) {
 
 function parseListComponent(component: IModuleComponent) {
   const listComponentSchema = z.object({
-    id: z.string(),
+    id: z.string().default(() => randomUUID()),
     parentId: z.string(),
     type: z.literal(ISheetModuleTypes.LIST),
     items: z.array(
@@ -78,7 +81,7 @@ function parseListComponent(component: IModuleComponent) {
 
 function parseSelectComponent(component: IModuleComponent) {
   const selectComponentSchema = z.object({
-    id: z.string(),
+    id: z.string().default(() => randomUUID()),
     parentId: z.string(),
     type: z.literal(ISheetModuleTypes.SELECT),
     options: z.array(
@@ -106,8 +109,10 @@ function parseContainerComponent(component: IModuleComponent) {
     throw new InvalidBodyIntoModuleComponentError(ISheetModuleTypes.CONTAINER)
   }
 
+  const _data = containerSafeParse.data
+
   return {
-    ...containerSafeParse.data,
-    children: verifyAndParseComponents(containerSafeParse.data.children, true),
+    ..._data,
+    children: verifyAndParseComponents(_data.id, _data.children, true),
   }
 }
