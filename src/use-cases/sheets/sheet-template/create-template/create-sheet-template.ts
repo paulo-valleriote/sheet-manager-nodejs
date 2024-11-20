@@ -5,13 +5,14 @@ import { verifyAndParseComponents } from '@/utils/sheet-modules/parse-and-valida
 
 interface ICreateSheetTemplateProps {
   children: IModuleComponent[]
+  isDefault?: boolean
 }
 
 export class CreateSheetTemplateUseCase {
   constructor(private sheetTemplatesRepository: ISheetTemplatesRepository) {}
 
   async execute(data: ICreateSheetTemplateProps) {
-    const { children } = data
+    const { children, isDefault } = data
 
     if (children.length === 0) {
       throw new EmptyContentOfSheetModuleTypeError()
@@ -20,6 +21,7 @@ export class CreateSheetTemplateUseCase {
     const formattedContent = verifyAndParseComponents(children)
     await this.sheetTemplatesRepository.create({
       children: JSON.stringify(formattedContent),
+      isDefault,
     })
   }
 }

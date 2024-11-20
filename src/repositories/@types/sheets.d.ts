@@ -15,6 +15,7 @@ interface ICreateSheetParams {
   active?: boolean
   isEditable?: boolean
   userId: string
+  templateId?: string
 }
 
 interface IUpdateSheetParams extends ISheetReadonlyOperationParams {

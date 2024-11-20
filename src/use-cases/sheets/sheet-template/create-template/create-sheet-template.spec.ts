@@ -143,6 +143,37 @@ describe('Create sheet template use case', () => {
     )
   })
 
+  it('should be able to create a new module with default field as true', async () => {
+    await sut.execute({
+      isDefault: true,
+      children: [
+        {
+          id: 'module-id',
+          parentId: 'sheet-id',
+          type: ISheetModuleTypes.TEXT,
+          label: 'Label',
+          placeholder: 'Placeholder',
+          value: 'Value',
+        },
+      ],
+    })
+
+    const sheetTemplates = await sheetTemplateRepository.list()
+    expect(sheetTemplates.data).toHaveLength(1)
+    expect(sheetTemplates.data[0].isDefault).toBe(true)
+    expect(JSON.parse(sheetTemplates.data[0].children)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: 'text',
+          label: expect.any(String),
+          placeholder: expect.any(String),
+          value: expect.any(String),
+        }),
+      ]),
+    )
+  })
+
+
   it('should throw an error if new module type container is invalid', async () => {
     const sheetId = 'sheet-id'
 

@@ -14,16 +14,18 @@ datasource db {
 }
 
 model Sheet {
-  id         String   @id @default(uuid())
+  id         String         @id @default(uuid())
   name       String
   owner      String
-  isActive   Boolean  @default(true)
-  isEditable Boolean  @default(true)
+  isActive   Boolean        @default(true)
+  isEditable Boolean        @default(true)
   age        Int?
-  userId     String   @map("user_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-  user       User     @relation(fields: [userId], references: [id])
+  userId     String         @map("user_id")
+  templateId String?        @map("template_id")
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @updatedAt @map("updated_at")
+  user       User           @relation(fields: [userId], references: [id])
+  template   SheetTemplate? @relation(fields: [templateId], references: [id])
 
   @@map("sheets")
 }
@@ -31,8 +33,10 @@ model Sheet {
 model SheetTemplate {
   id        String   @id @default(uuid())
   children  Json
+  isDefault Boolean  @default(false) @map("is_default")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  Sheet     Sheet[]
 
   @@map("sheet_templates")
 }

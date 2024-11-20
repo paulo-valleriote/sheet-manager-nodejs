@@ -6,12 +6,13 @@ import { verifyAndParseComponents } from '@/utils/sheet-modules/parse-and-valida
 interface IUpdateSheetTemplateProps {
   id: string
   children: IModuleComponent[]
+  isDefault?: boolean
 }
 
 export class UpdateSheetTemplateUseCase {
   constructor(private sheetTemplatesRepository: ISheetTemplatesRepository) {}
 
-  async execute({ id, children }: IUpdateSheetTemplateProps) {
+  async execute({ id, children, isDefault }: IUpdateSheetTemplateProps) {
     const sheetTemplateExists = await this.sheetTemplatesRepository.get({ id })
 
     if (!sheetTemplateExists.data) {
@@ -22,7 +23,8 @@ export class UpdateSheetTemplateUseCase {
 
     await this.sheetTemplatesRepository.update({
       id,
-      children: JSON.stringify(formattedContent)
+      isDefault,
+      children: JSON.stringify(formattedContent),
     })
   }
 }

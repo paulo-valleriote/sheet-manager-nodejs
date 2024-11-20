@@ -9,10 +9,12 @@ interface IGetSheetTemplateParams extends ISheetTemplateReadonlyOperationParams 
 interface ICreateSheetTemplateParams {
   id?: string
   children: string
+  isDefault?: boolean
 }
 
 interface IUpdateSheetTemplateParams extends ISheetTemplateReadonlyOperationParams {
   children: string
+  isDefault?: boolean
 }
 
 interface IDeleteSheetTemplateParams extends ISheetTemplateReadonlyOperationParams {}
