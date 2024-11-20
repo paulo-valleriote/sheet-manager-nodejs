@@ -28,6 +28,15 @@ model Sheet {
   @@map("sheets")
 }
 
+model SheetTemplate {
+  id        String   @id @default(uuid())
+  children  Json
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("sheet_templates")
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
