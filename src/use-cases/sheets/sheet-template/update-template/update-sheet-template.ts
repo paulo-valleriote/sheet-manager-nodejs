@@ -19,8 +19,7 @@ export class UpdateSheetTemplateUseCase {
       throw new ResourceNotFoundError()
     }
 
-    const formattedContent = verifyAndParseComponents(children)
-
+    const formattedContent = verifyAndParseComponents(id, children)
     await this.sheetTemplatesRepository.update({
       id,
       isDefault,

@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import type { IModuleComponent } from '@/domain/entities/module-content'
 import type { ISheetTemplatesRepository } from '@/repositories/sheet-templates-repository'
 import { EmptyContentOfSheetModuleTypeError } from '@/use-cases/errors/empty-content-of-sheet-module-type-error'
@@ -18,8 +19,11 @@ export class CreateSheetTemplateUseCase {
       throw new EmptyContentOfSheetModuleTypeError()
     }
 
-    const formattedContent = verifyAndParseComponents(children)
+    const id = randomUUID()
+    const formattedContent = verifyAndParseComponents(id, children)
+    
     await this.sheetTemplatesRepository.create({
+      id,
       children: JSON.stringify(formattedContent),
       isDefault,
     })
