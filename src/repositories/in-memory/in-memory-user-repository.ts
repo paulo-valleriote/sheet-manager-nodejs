@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { IUser } from '@/domain/entities/User'
+import type { IUser } from '@/domain/entities/user'
 import type {
   ICreateUserParams,
   IDeleteUserParams,
