@@ -1,4 +1,4 @@
-import type { IUser } from '@/domain/entities/User'
+import type { IUser } from '@/domain/entities/user'
 
 interface IUserReadonlyOperationParams {
   userId: string
