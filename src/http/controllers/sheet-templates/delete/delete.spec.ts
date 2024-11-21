@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import app from '@/app'
+import { IUserRole } from '@/domain/entities/enums/user-roles'
 import { prisma } from '@/lib/prisma'
 import { createAndAuthenticateUser } from '@/utils/tests/create-and-authenticate-user'
 import request from 'supertest'
@@ -15,7 +16,7 @@ describe('Delete Sheet Template Controller', () => {
   })
 
   it('should be able to delete a sheet template', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, IUserRole.ADMIN)
     const templateId = randomUUID()
 
     await prisma.sheetTemplate.create({

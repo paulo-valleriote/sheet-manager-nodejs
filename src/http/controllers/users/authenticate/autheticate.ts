@@ -21,6 +21,9 @@ export async function autheticate(request: FastifyRequest, reply: FastifyReply) 
 
     const jwtHandler = new FastifyJwtHandler()
     const { token, refreshToken } = await jwtHandler.sign({
+      payload: {
+        role: user.role,
+      },
       reply,
       signSub: user.id,
       refreshToken: true,

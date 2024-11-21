@@ -41,10 +41,16 @@ model SheetTemplate {
   @@map("sheet_templates")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
   passwordHash String   @map("password_hash")
+  role         UserRole @default(USER)
   createdAt    DateTime @default(now()) @map("created_at")
   sheets       Sheet[]
 

@@ -1,4 +1,5 @@
 import app from '@/app'
+import { IUserRole } from '@/domain/entities/enums/user-roles'
 import { createAndAuthenticateUser } from '@/utils/tests/create-and-authenticate-user'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
@@ -13,7 +14,7 @@ describe('Create Sheet Template Controller', () => {
   })
 
   it('should be able to create a sheet template', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateUser(app, IUserRole.ADMIN)
 
     const response = await request(app.server)
       .post('/sheets/templates')
