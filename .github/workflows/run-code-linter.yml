@@ -1,12 +1,14 @@
-name: Lint Workflow
+name: Run Code Linter
 
 on:
   push:
     branches:
       - main
+      - dev
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
   lint:
@@ -21,5 +23,5 @@ jobs:
       with:
         version: latest
 
-    - name: Run Biome
+    - name: Run Biome Linter
       run: biome ci .
