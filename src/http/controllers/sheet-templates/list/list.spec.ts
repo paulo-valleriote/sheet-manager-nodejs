@@ -25,9 +25,7 @@ describe('List Sheet Templates Controller', () => {
       },
     })
 
-    const response = await request(app.server)
-      .get('/sheets/templates')
-      .set('Authorization', `Bearer ${token}`)
+    const response = await request(app.server).get('/sheets/templates').set('Authorization', `Bearer ${token}`)
 
     expect(response.statusCode).toBe(200)
   })

@@ -1,4 +1,3 @@
-
 import { makeGetSheetTemplateUseCase } from '@/use-cases/sheets/_factories/sheet-template/make-get-sheet-template-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

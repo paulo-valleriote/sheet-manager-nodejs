@@ -2,7 +2,7 @@ import { CryptHandler } from '@/lib/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { RecoverPasswordUseCase } from './recover-password'
-  
+
 describe('Recover password use case', () => {
   let userRepository: InMemoryUserRepository
   let cryptHandler: CryptHandler

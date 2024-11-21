@@ -173,7 +173,6 @@ describe('Create sheet template use case', () => {
     )
   })
 
-
   it('should throw an error if new module type container is invalid', async () => {
     const sheetId = 'sheet-id'
 

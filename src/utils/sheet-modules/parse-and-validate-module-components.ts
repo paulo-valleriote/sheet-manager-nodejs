@@ -5,13 +5,17 @@ import type { IModuleComponent } from '@/domain/entities/module-content'
 import { InvalidBodyIntoModuleComponentError } from '@/use-cases/errors/invalid-body-into-module-component'
 import { z } from 'zod'
 
-export function verifyAndParseComponents(parentId: string, components: IModuleComponent[], skipContainerValidation = false) {
+export function verifyAndParseComponents(
+  parentId: string,
+  components: IModuleComponent[],
+  skipContainerValidation = false,
+) {
   const typeGuardHandler = new HandleModuleContentGuardType()
   const formattedComponents: IModuleComponent[] = []
 
   for (const component of components) {
     component.parentId = parentId
-    
+
     if (typeGuardHandler.isTextComponent(component)) {
       const parsedComponent = parseAndValidateModuleComponent(component, parseTextComponent, ISheetModuleTypes.TEXT)
       formattedComponents.push(parsedComponent)

@@ -26,7 +26,7 @@ export class RecoverPasswordUseCase {
 
     if (!doesPasswordMatch) {
       throw new InvalidCredentialsError()
-    } 
+    }
 
     const passwordHash = await this.cryptHandler.hash(data.newPassword)
     await this.userRepository.update({

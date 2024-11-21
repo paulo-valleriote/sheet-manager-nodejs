@@ -3,7 +3,6 @@ import { beforeEach, expect, it } from 'vitest'
 import { describe } from 'vitest'
 import { ListSheetTemplatesUseCase } from './list-sheet-templates'
 
-
 describe('List sheet templates use case', () => {
   let sheetTemplateRepository: InMemorySheetTemplateRepository
   let sut: ListSheetTemplatesUseCase

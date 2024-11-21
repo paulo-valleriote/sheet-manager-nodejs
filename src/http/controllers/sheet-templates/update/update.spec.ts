@@ -53,13 +53,15 @@ describe('Update Sheet Template Controller', () => {
     const templateChildren = JSON.parse(sheetTemplate?.children?.toString() ?? '')
 
     expect(response.statusCode).toBe(204)
-    expect(templateChildren).toEqual(expect.arrayContaining([
-      expect.objectContaining({
-        type: 'text',
-        label: 'Label 2',
-        placeholder: 'Placeholder 2',
-        value: 'Value 2',
-      }),
-    ]))
+    expect(templateChildren).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: 'text',
+          label: 'Label 2',
+          placeholder: 'Placeholder 2',
+          value: 'Value 2',
+        }),
+      ]),
+    )
   })
 })

@@ -18,7 +18,7 @@ function parseRequest(request: FastifyRequest) {
 
   const createSheetBodySchema = z.object({
     name: z.string().min(1),
-    owner: z.string().min(1)
+    owner: z.string().min(1),
   })
 
   const createParams = createSheetParamsSchema.parse(request.params)

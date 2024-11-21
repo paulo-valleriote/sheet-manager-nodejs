@@ -79,8 +79,9 @@ describe('Update sheet template use case', () => {
       ]),
     })
 
-    await expect(sut.execute({
-      id: 'sheet-template-id',
+    await expect(
+      sut.execute({
+        id: 'sheet-template-id',
         children: [
           {
             id: 'module-id',
@@ -94,9 +95,11 @@ describe('Update sheet template use case', () => {
   })
 
   it('should not be able to update a sheet template when it not exists', async () => {
-    await expect(sut.execute({
-      id: 'sheet-template-id',
-      children: [],
-    })).rejects.toBeInstanceOf(ResourceNotFoundError)
+    await expect(
+      sut.execute({
+        id: 'sheet-template-id',
+        children: [],
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

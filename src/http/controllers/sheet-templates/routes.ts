@@ -1,6 +1,6 @@
-import { IUserRole } from "@/domain/entities/enums/user-roles"
-import { verifyJwt } from "@/http/middlewares/auth/verify-jwt"
-import { verifyUserRole } from "@/http/middlewares/auth/verify-user-role"
+import { IUserRole } from '@/domain/entities/enums/user-roles'
+import { verifyJwt } from '@/http/middlewares/auth/verify-jwt'
+import { verifyUserRole } from '@/http/middlewares/auth/verify-user-role'
 import type { FastifyInstance } from 'fastify'
 import { createSheetTemplate } from './create/create'
 import { deleteSheetTemplate } from './delete/delete'
