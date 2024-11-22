@@ -15,6 +15,7 @@ export interface IModuleTextComponent extends IBaseModule {
 export interface IModuleListComponent extends IBaseModule {
   type: ISheetModuleTypes.LIST
   items?: {
+    id: string
     label: string
     value: string
   }[]
@@ -23,7 +24,9 @@ export interface IModuleListComponent extends IBaseModule {
 export interface IModuleSelectComponent extends IBaseModule {
   type: ISheetModuleTypes.SELECT
   options?: {
-    label: string
+    id: string
+    default: boolean
+    selected: boolean
     value: string
   }[]
 }
