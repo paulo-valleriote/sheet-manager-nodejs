@@ -13,5 +13,5 @@ export interface ISheetsRepository {
   delete(data: IDeleteSheetParams): Promise<void>
   get(data: IGetSheetParams): Promise<IGetSheetResponse>
   list(data: IListSheetsParams): Promise<IListSheetsResponse>
-  update(data: IUpdateSheetParams): Promise<void>
+  update(data: IUpdateSheetParams, id?: string): Promise<void>
 }

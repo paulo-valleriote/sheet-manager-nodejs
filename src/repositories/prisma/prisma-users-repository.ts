@@ -1,3 +1,4 @@
+import type { IUserRole } from '@/domain/entities/enums/user-roles'
 import { prisma } from '@/lib/prisma'
 import type {
   ICreateUserParams,
@@ -31,8 +32,13 @@ export class PrismaUsersRepository implements IUsersRepository {
       },
     })
 
+    if (!user) return { data: null }
+
     return {
-      data: user ?? null,
+      data: {
+        ...user,
+        role: user.role as IUserRole,
+      },
     }
   }
 
@@ -43,8 +49,13 @@ export class PrismaUsersRepository implements IUsersRepository {
       },
     })
 
+    if (!user) return { data: null }
+
     return {
-      data: user ?? null,
+      data: {
+        ...user,
+        role: user.role as IUserRole,
+      },
     }
   }
 
@@ -52,7 +63,10 @@ export class PrismaUsersRepository implements IUsersRepository {
     const users = await prisma.user.findMany()
 
     return {
-      data: users,
+      data: users.map((user) => ({
+        ...user,
+        role: user.role as IUserRole,
+      })),
     }
   }
 

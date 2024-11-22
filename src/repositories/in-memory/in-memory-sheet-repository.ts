@@ -32,21 +32,16 @@ export class InMemorySheetRepository implements ISheetsRepository {
 
   async create(data: ICreateSheetParams): Promise<void> {
     this.sheets.push({
-      id: randomUUID(),
-      name: data.name,
-      owner: data.owner,
-      age: data.age ?? null,
-      specie: data.specie ?? null,
-      characterClass: data.characterClass ?? null,
-      active: data.active ?? true,
+      id: data.id ?? randomUUID(),
+      createdAt: data.createdAt ?? new Date(),
+      isActive: data.isActive ?? true,
       isEditable: data.isEditable ?? true,
-      userId: data.userId,
-      createdAt: new Date(),
+      ...data,
     })
   }
 
-  async update(data: IUpdateSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId && sheet.userId === data.userId)
+  async update(data: IUpdateSheetParams, id: string): Promise<void> {
+    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === id && sheet.userId === data.userId)
 
     this.sheets[sheetIndex] = {
       ...this.sheets[sheetIndex],
