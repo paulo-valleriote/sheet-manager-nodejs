@@ -39,6 +39,7 @@ describe('Update sheet template use case', () => {
           type: ISheetModuleTypes.LIST,
           items: [
             {
+              id: 'item-id',
               label: 'Item label',
               value: 'Item value',
             },
@@ -55,6 +56,7 @@ describe('Update sheet template use case', () => {
           type: 'list',
           items: [
             {
+              id: 'item-id',
               label: 'Item label',
               value: 'Item value',
             },
