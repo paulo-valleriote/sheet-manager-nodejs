@@ -17,7 +17,10 @@ function parseRequest(request: FastifyRequest) {
   })
 
   const createSheetBodySchema = z.object({
-    name: z.string().min(1),
+    pcName: z.string().min(1),
+    pcAge: z.number().min(1),
+    pcRole: z.string().min(1),
+    pcSpecie: z.string().min(1),
     owner: z.string().min(1),
   })
 

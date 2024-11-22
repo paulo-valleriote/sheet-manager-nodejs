@@ -22,13 +22,19 @@ describe('List Sheets Controller', () => {
       data: [
         {
           id: sheetId,
-          name: 'Sheet 1',
+          pcName: 'Julius',
+          pcAge: 35,
+          pcRole: 'Warrior',
+          pcSpecie: 'Human',
           owner: userId || 'user-1',
           userId: userId || 'user-1',
         },
         {
           id: randomUUID(),
-          name: 'Sheet 2',
+          pcName: 'John',
+          pcAge: 25,
+          pcRole: 'Mage',
+          pcSpecie: 'Elf',
           owner: userId || 'user-1',
           userId: userId || 'user-1',
         },
@@ -42,11 +48,17 @@ describe('List Sheets Controller', () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: sheetId,
-          name: 'Sheet 1',
+          pcName: 'Julius',
+          pcAge: 35,
+          pcRole: 'Warrior',
+          pcSpecie: 'Human',
         }),
         expect.objectContaining({
           id: expect.any(String),
-          name: 'Sheet 2',
+          pcName: 'John',
+          pcAge: 25,
+          pcRole: 'Mage',
+          pcSpecie: 'Elf',
         }),
       ]),
     )

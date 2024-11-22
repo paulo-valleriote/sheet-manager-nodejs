@@ -19,7 +19,10 @@ describe('Create Sheet Controller', () => {
       .post(`/users/${userId}/sheets`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        name: 'Sheet 1',
+        pcName: 'Julius',
+        pcAge: 35,
+        pcRole: 'Warrior',
+        pcSpecie: 'Human',
         owner: userId,
       })
 

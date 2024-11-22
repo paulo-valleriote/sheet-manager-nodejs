@@ -21,7 +21,10 @@ describe('Get Sheet Controller', () => {
     await prisma.sheet.create({
       data: {
         id: sheetId,
-        name: 'Sheet 1',
+        pcName: 'Julius',
+        pcAge: 35,
+        pcRole: 'Warrior',
+        pcSpecie: 'Human',
         owner: userId || 'user-1',
         userId: userId || 'user-1',
       },
@@ -35,7 +38,10 @@ describe('Get Sheet Controller', () => {
     expect(response.body.data).toEqual(
       expect.objectContaining({
         id: sheetId,
-        name: 'Sheet 1',
+        pcName: 'Julius',
+        pcAge: 35,
+        pcRole: 'Warrior',
+        pcSpecie: 'Human',
       }),
     )
   })

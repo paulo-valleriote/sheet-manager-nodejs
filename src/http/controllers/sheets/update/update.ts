@@ -3,14 +3,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
 export async function updateSheet(request: FastifyRequest, reply: FastifyReply) {
-  const { sheetId, userId, name } = parseRequest(request)
+  const {sheetId, ...data} = parseRequest(request)
 
   const updateSheetUseCase = makeUpdateSheetUseCase()
-  await updateSheetUseCase.execute({
-    userId,
-    sheetId,
-    name,
-  })
+  await updateSheetUseCase.execute(data, sheetId)
 
   return reply.status(204).send()
 }
@@ -22,7 +18,10 @@ function parseRequest(request: FastifyRequest) {
   })
 
   const updateSheetBodySchema = z.object({
-    name: z.string().min(1),
+    pcName: z.string().min(1).optional(),
+    pcAge: z.number().min(1).optional(),
+    pcRole: z.string().min(1).optional(),
+    pcSpecie: z.string().min(1).optional(),
   })
 
   const updateParams = updateSheetParamsSchema.parse(request.params)
