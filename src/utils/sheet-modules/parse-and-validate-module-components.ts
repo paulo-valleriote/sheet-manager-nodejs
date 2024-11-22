@@ -74,6 +74,7 @@ function parseListComponent(component: IModuleComponent) {
     type: z.literal(ISheetModuleTypes.LIST),
     items: z.array(
       z.object({
+        id: z.string().default(() => randomUUID()),
         label: z.string().min(1),
         value: z.string().min(1),
       }),
@@ -90,6 +91,9 @@ function parseSelectComponent(component: IModuleComponent) {
     type: z.literal(ISheetModuleTypes.SELECT),
     options: z.array(
       z.object({
+        id: z.string().default(() => randomUUID()),
+        default: z.boolean().default(false),
+        selected: z.boolean().default(false),
         label: z.string().min(1),
         value: z.string().min(1),
       }),
