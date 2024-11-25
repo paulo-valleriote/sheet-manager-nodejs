@@ -12,6 +12,8 @@ jobs:
     services:
       postgres:
         image: bitnami/postgresql:16
+        ports:
+          - 5432:5432
         env:
           POSTGRES_USER: test-docker-user
           POSTGRES_PASSWORD: test-docker-password
