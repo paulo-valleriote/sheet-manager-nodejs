@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { ISheet } from '@/domain/entities/Sheet'
+import type { ISheet } from '@/domain/entities/sheet'
 import type {
   ICreateSheetParams,
   IDeleteSheetParams,
@@ -32,15 +32,16 @@ export class InMemorySheetRepository implements ISheetsRepository {
 
   async create(data: ICreateSheetParams): Promise<void> {
     this.sheets.push({
-      id: randomUUID(),
-      name: data.name,
-      userId: data.userId,
-      createdAt: new Date(),
+      id: data.id ?? randomUUID(),
+      createdAt: data.createdAt ?? new Date(),
+      isActive: data.isActive ?? true,
+      isEditable: data.isEditable ?? true,
+      ...data,
     })
   }
 
-  async update(data: IUpdateSheetParams): Promise<void> {
-    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === data.sheetId && sheet.userId === data.userId)
+  async update(data: IUpdateSheetParams, id: string): Promise<void> {
+    const sheetIndex = this.sheets.findIndex((sheet) => sheet.id === id && sheet.userId === data.userId)
 
     this.sheets[sheetIndex] = {
       ...this.sheets[sheetIndex],

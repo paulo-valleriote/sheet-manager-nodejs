@@ -1,12 +1,16 @@
+import { IUserRole } from '@/domain/entities/enums/user-roles'
+import { CryptHandler } from '@/lib/crypt-handler'
 import { prisma } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
-export const createAndAuthenticateUser = async (app: FastifyInstance) => {
-  await request(app.server).post('/users').send({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    password: '123456',
+export const createAndAuthenticateUser = async (app: FastifyInstance, role?: IUserRole) => {
+  await prisma.user.create({
+    data: {
+      email: 'john.doe@example.com',
+      passwordHash: await new CryptHandler().hash('123456'),
+      role: role ?? IUserRole.USER,
+    },
   })
 
   const authenticateResponse = await request(app.server).post('/sessions').send({

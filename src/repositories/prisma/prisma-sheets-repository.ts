@@ -32,7 +32,18 @@ export class PrismaSheetsRepository implements ISheetsRepository {
       },
     })
 
-    return { data: sheet ?? null }
+    if (!sheet) return { data: null }
+
+    return {
+      data: {
+        ...sheet,
+        pcAge: sheet.pcAge ?? undefined,
+        pcSpecie: sheet.pcSpecie ?? undefined,
+        pcRole: sheet.pcRole ?? undefined,
+        sheetTemplateId: sheet.sheetTemplateId ?? undefined,
+        templateValues: sheet.templateValues ? JSON.stringify(sheet.templateValues) : undefined,
+      },
+    }
   }
 
   async list(data: IListSheetsParams): Promise<IListSheetsResponse> {
@@ -42,11 +53,19 @@ export class PrismaSheetsRepository implements ISheetsRepository {
       },
     })
 
-    return { data: sheets }
+    return { data: sheets.map((sheet) => ({
+        ...sheet,
+        pcAge: sheet.pcAge ?? undefined,
+        pcSpecie: sheet.pcSpecie ?? undefined,
+        pcRole: sheet.pcRole ?? undefined,
+        sheetTemplateId: sheet.sheetTemplateId ?? undefined,
+        templateValues: sheet.templateValues ? JSON.stringify(sheet.templateValues) : undefined,
+      })),
+    }
   }
 
-  async update(data: IUpdateSheetParams): Promise<void> {
-    const { sheetId, userId, ...updateData } = data
+  async update(data: IUpdateSheetParams, sheetId: string): Promise<void> {
+    const { userId, ...updateData } = data
 
     await prisma.sheet.update({
       where: {

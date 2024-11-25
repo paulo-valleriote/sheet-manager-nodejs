@@ -3,8 +3,9 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import Fastify from 'fastify'
 import { ZodError } from 'zod'
-import { sheetsRoutes } from './http/controllers/sheets/_routes'
-import { userRoutes } from './http/controllers/users/_routes'
+import { sheetTemplatesRoutes } from './http/controllers/sheet-templates/routes'
+import { sheetsRoutes } from './http/controllers/sheets/routes'
+import { userRoutes } from './http/controllers/users/routes'
 
 // App Configuration
 const app = Fastify({
@@ -25,9 +26,16 @@ app.register(fastifyJwt, {
 })
 
 // Routes
+app.get('/', () => {
+  return { message: 'Hello World' }
+})
+
 app.register(userRoutes)
 app.register(sheetsRoutes, {
-  prefix: '/users/:userId',
+  prefix: '/users/:userId/sheets',
+})
+app.register(sheetTemplatesRoutes, {
+  prefix: '/sheets/templates',
 })
 
 // Global error handler

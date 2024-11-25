@@ -1,0 +1,29 @@
+name: Run Code Linter
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Biome
+      uses: biomejs/setup-biome@v2
+      with:
+        version: latest
+
+    - name: Format Code
+      run: biome format --write
+
+    - name: Run Biome Linter
+      run: biome ci .

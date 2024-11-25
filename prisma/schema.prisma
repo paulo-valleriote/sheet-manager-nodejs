@@ -14,20 +14,66 @@ datasource db {
 }
 
 model Sheet {
-  id        String   @id @default(uuid())
-  name      String
-  userId    String   @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id])
+  id                        String                     @id @default(uuid())
+  pcName                    String                     @map("pc_name")
+  owner                     String
+  isActive                  Boolean                    @default(true)
+  isEditable                Boolean                    @default(true)
+  pcAge                     Int?                       @map("pc_age")
+  pcSpecie                  String?                    @map("pc_specie")
+  pcRole                    String?                    @map("pc_role")
+  userId                    String                     @map("user_id")
+  sheetTemplateId           String?                    @map("sheet_template_id")
+  templateValues            Json?                      @map("template_values")
+  createdAt                 DateTime                   @default(now()) @map("created_at")
+  updatedAt                 DateTime                   @updatedAt @map("updated_at")
+  user                      User                       @relation(fields: [userId], references: [id])
+  sheetTemplate             SheetTemplate?             @relation(fields: [sheetTemplateId], references: [id])
+  playerCharacterAttributes PlayerCharacterAttributes?
 
   @@map("sheets")
+}
+
+model PlayerCharacterAttributes {
+  id                   String              @id @default(uuid())
+  attributesTemplateId String?             @map("attributes_template_id")
+  sheetId              String              @unique @map("sheet_id")
+  sheet                Sheet               @relation(fields: [sheetId], references: [id])
+  attributesDefined    Json                @map("attributes_defined")
+  attributesTemplate   AttributesTemplate? @relation(fields: [attributesTemplateId], references: [id])
+
+  @@map("player_character_attributes")
+}
+
+model AttributesTemplate {
+  id                        String                      @id @default(uuid())
+  attributes                Json
+  playerCharacterAttributes PlayerCharacterAttributes[]
+
+  @@map("attributes_templates")
+}
+
+model SheetTemplate {
+  id        String   @id @default(uuid())
+  children  Json
+  isDefault Boolean  @default(false) @map("is_default")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Sheet     Sheet[]
+
+  @@map("sheet_templates")
+}
+
+enum UserRole {
+  ADMIN
+  USER
 }
 
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
   passwordHash String   @map("password_hash")
+  role         UserRole @default(USER)
   createdAt    DateTime @default(now()) @map("created_at")
   sheets       Sheet[]
 

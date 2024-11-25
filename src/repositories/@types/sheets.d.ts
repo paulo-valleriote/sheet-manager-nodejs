@@ -1,3 +1,6 @@
+import type { ISheet } from '@/domain/entities/sheet'
+import type { Optional } from '@/domain/types/optional'
+
 interface ISheetReadonlyOperationParams {
   sheetId: string
   userId: string
@@ -6,13 +9,14 @@ interface ISheetReadonlyOperationParams {
 interface IGetSheetParams extends ISheetReadonlyOperationParams {}
 interface IListSheetsParams extends Pick<ISheetReadonlyOperationParams, 'userId'> {}
 
-interface ICreateSheetParams {
-  name: string
-  userId: string
-}
+interface ICreateSheetParams extends Optional<ISheet, 'id' | 'createdAt' | 'updatedAt' | 'isActive' | 'isEditable' | 'sheetTemplateId' | 'templateValues'> {}
 
-interface IUpdateSheetParams extends ISheetReadonlyOperationParams {
-  name: string
+interface IUpdateSheetParams extends Omit<ISheetReadonlyOperationParams, 'sheetId'> {
+  pcName?: string
+  pcAge?: number
+  pcRole?: string
+  pcSpecie?: string
+  templateValues?: string
 }
 
 interface IDeleteSheetParams extends ISheetReadonlyOperationParams {}
@@ -33,4 +37,5 @@ export type {
   ICreateSheetParams,
   IUpdateSheetParams,
   IDeleteSheetParams,
+  IModuleTemplateValue,
 }

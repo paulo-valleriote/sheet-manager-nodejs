@@ -1,4 +1,4 @@
-import type { IUser } from '@/domain/entities/User'
+import type { IUser } from '@/domain/entities/user'
 import type { ICryptHandler } from '@/lib/@types/crypt'
 import type { IUsersRepository } from '@/repositories/users-repository'
 import { InvalidCredentialsError } from '../../errors/invalid-credentials-error'
