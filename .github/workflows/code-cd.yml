@@ -20,4 +20,4 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - run: pm2 start dist/server.js --name "sheet-manager-api"
+      - run: pm2 start build/server.js --name "sheet-manager-api"
