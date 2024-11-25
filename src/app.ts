@@ -26,6 +26,10 @@ app.register(fastifyJwt, {
 })
 
 // Routes
+app.get('/', () => {
+  return { message: 'Hello World' }
+})
+
 app.register(userRoutes)
 app.register(sheetsRoutes, {
   prefix: '/users/:userId/sheets',
