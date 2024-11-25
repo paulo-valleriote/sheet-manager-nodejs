@@ -1,5 +1,6 @@
 name: Node.js CD
 
+
 on:
   push:
     branches:
@@ -14,20 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Get SSH Key and set permissions
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-
-      - name: Deploy to server
-        run: |
-          rsync -avz --exclude 'node_modules' --exclude '.git' --exclude '.env' \
-          -e "ssh -i ~/.ssh/id_rsa" \
-          . ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PATH }}
-
-      - name: Connect to server
-        run: ssh -i "~/.ssh/id_rsa" ubuntu@${{ secrets.SSH_HOST }}
-
       - run: npm ci
       - run: npm run build
-      - run: npm run start
+      
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: "-avzr --delete"
+          path: ./*
+          remote_path: ${{ secrets.SSH_PATH }}
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}

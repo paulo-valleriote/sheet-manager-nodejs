@@ -3,3 +3,10 @@ node_modules
 
 # ENVIRONMENT
 .env
+
+# SSH KEYS
+.ssh
+
+# BUILD FOLDERS
+build
+dist
