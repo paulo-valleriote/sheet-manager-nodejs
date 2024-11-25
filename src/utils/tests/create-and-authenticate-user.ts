@@ -4,6 +4,12 @@ import { prisma } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
+/**
+ * Create and authenticate a user for testing purposes
+ * @param app - Fastify instance
+ * @param role - User role
+ * @returns User token and id
+ */
 export const createAndAuthenticateUser = async (app: FastifyInstance, role?: IUserRole) => {
   await prisma.user.create({
     data: {

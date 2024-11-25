@@ -3,6 +3,7 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import Fastify from 'fastify'
 import { ZodError } from 'zod'
+import { ROUTE } from './http/controllers/routes.index'
 import { sheetTemplatesRoutes } from './http/controllers/sheet-templates/routes'
 import { sheetsRoutes } from './http/controllers/sheets/routes'
 import { userRoutes } from './http/controllers/users/routes'
@@ -24,18 +25,24 @@ app.register(fastifyJwt, {
     expiresIn: '10m',
   },
 })
+/*app.register(fastifyRedis, {
+  url: ENV.CACHE_DB_URL,
+  closeClient: true
+})*/
 
 // Routes
 app.get('/', () => {
-  return { message: 'Hello World' }
+  return { message: 'Hello World! Welcome to "The Sheet Ledger" API.', routes: ROUTE }
 })
 
-app.register(userRoutes)
+app.register(userRoutes, {
+  prefix: ROUTE.usersAndAuthentication,
+})
 app.register(sheetsRoutes, {
-  prefix: '/users/:userId/sheets',
+  prefix: ROUTE.sheets,
 })
 app.register(sheetTemplatesRoutes, {
-  prefix: '/sheets/templates',
+  prefix: ROUTE.sheetTemplates,
 })
 
 // Global error handler

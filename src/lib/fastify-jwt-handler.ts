@@ -1,5 +1,9 @@
 import type { FastifyReply } from 'fastify'
 
+/**
+ * Fastify JWT handler
+ * @description This class is responsible for signing and refreshing JWT tokens
+ */
 export class FastifyJwtHandler {
   async sign({ reply, signSub, payload, refreshToken, expiresIn }: JwtSignPayload): Promise<JwtSignResponse> {
     const token = await reply.jwtSign(payload ?? {}, {

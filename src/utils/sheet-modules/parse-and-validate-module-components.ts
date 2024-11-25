@@ -5,6 +5,13 @@ import type { IModuleComponent } from '@/domain/entities/module-content'
 import { InvalidBodyIntoModuleComponentError } from '@/use-cases/errors/invalid-body-into-module-component'
 import { z } from 'zod'
 
+/**
+ * Verify and parse components of sheet template to ensure validation
+ * @param parentId - Parent ID
+ * @param components - Components
+ * @param skipContainerValidation - Skip "container" type validation
+ * @returns Formatted components
+ */
 export function verifyAndParseComponents(
   parentId: string,
   components: IModuleComponent[],
