@@ -48,4 +48,4 @@ jobs:
           fi
 
       - name: Start application
-        run: pm2 start build/server.js --name "sheet-manager-api" --update-env
+        run: pm2 start build/server.js --name "sheet-manager-api" --watch --update-env
