@@ -64,18 +64,65 @@ model SheetTemplate {
   @@map("sheet_templates")
 }
 
+model Party {
+  id               String             @id @default(uuid())
+  name             String
+  description      String?
+  imgUrl           String?            @map("img_url")
+  maxSize          Int?               @map("max_size")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  dungeonMasterId  String             @map("dungeon_master_id")
+  players          User[]
+  RoleOfParty      RoleOfParty[]
+  CharacterOfParty CharacterOfParty[]
+
+  @@map("parties")
+}
+
+model RoleOfParty {
+  id      String    @id @default(uuid())
+  partyId String    @map("party_id")
+  userId  String    @map("user_id")
+  role    PartyRole @default(PLAYER)
+  party   Party     @relation(fields: [partyId], references: [id])
+  user    User      @relation(fields: [userId], references: [id])
+
+  @@map("role_of_parties")
+}
+
+model CharacterOfParty {
+  id          String @id @default(uuid())
+  partyId     String @map("party_id")
+  characterId String @map("character_id")
+  userId      String @map("user_id")
+  party       Party  @relation(fields: [partyId], references: [id])
+  user        User   @relation(fields: [userId], references: [id])
+
+  @@map("character_of_parties")
+}
+
 enum UserRole {
   ADMIN
   USER
 }
 
+enum PartyRole {
+  MASTER
+  PLAYER
+}
+
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String   @map("password_hash")
-  role         UserRole @default(USER)
-  createdAt    DateTime @default(now()) @map("created_at")
-  sheets       Sheet[]
+  id               String             @id @default(uuid())
+  email            String             @unique
+  passwordHash     String             @map("password_hash")
+  role             UserRole           @default(USER)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  partyId          String?            @map("party_id")
+  sheets           Sheet[]
+  Party            Party[]
+  RoleOfParty      RoleOfParty[]
+  CharacterOfParty CharacterOfParty[]
 
   @@map("users")
 }
