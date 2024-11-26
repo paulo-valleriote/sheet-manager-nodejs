@@ -4,7 +4,6 @@ import type { Optional } from '@/domain/types/optional'
 interface IPartyReadonlyOperationParams {
   partyId: string
   dungeonMasterId: string
-  playerIds: string[]
 }
 
 interface IGetPartyParams extends IPartyReadonlyOperationParams {}
@@ -13,7 +12,10 @@ interface IListPartiesParams extends Pick<IPartyReadonlyOperationParams, 'dungeo
 interface ICreatePartyParams extends Optional<IParty, 'id' | 'createdAt' | 'updatedAt'> {}
 
 interface IUpdatePartyParams extends Omit<IPartyReadonlyOperationParams, 'partyId'> {
-  id: string
+  name?: string
+  description?: string
+  imgUrl?: string
+  maxSize?: number
 }
 
 interface IDeletePartyParams extends IPartyReadonlyOperationParams {}

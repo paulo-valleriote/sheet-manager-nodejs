@@ -4,8 +4,8 @@ import type { ICreatePartyParams, IDeletePartyParams, IGetPartyParams, IListPart
 export interface IPartiesRepository {
   create(data: ICreatePartyParams): Promise<void>
   findAll(params: IListPartiesParams): Promise<IParty[]>
-  findByPartyId(params: Pick<IGetPartyParams, 'partyId'>): Promise<IParty | null>
-  findByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>): Promise<IParty | null>
+  findByPartyId(params: Pick<IGetPartyParams, 'partyId' | 'dungeonMasterId'>): Promise<IParty | null>
+  findAllByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>): Promise<IParty[]>
   update(params: IUpdatePartyParams, id: string): Promise<void>
-  delete(params: Pick<IDeletePartyParams, 'partyId'>): Promise<void>
+  delete(params: Pick<IDeletePartyParams, 'partyId' | 'dungeonMasterId'>): Promise<void>
 }
