@@ -8,7 +8,7 @@ export async function listParties(request: FastifyRequest, reply: FastifyReply) 
   const listPartiesUseCase = makeListPartyUseCase()
   const parties = await listPartiesUseCase.execute({ dungeonMasterId })
 
-  return reply.status(200).send({ data: parties })
+  return reply.status(200).send({ data: parties.data })
 }
 
 function parseRequest(request: FastifyRequest) {

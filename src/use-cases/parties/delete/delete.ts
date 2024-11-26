@@ -5,13 +5,13 @@ import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-err
 export class DeletePartyUseCase {
   constructor(private partiesRepository: IPartiesRepository) {}
 
-  async execute(data: Pick<IDeletePartyParams, 'partyId' | 'dungeonMasterId'>) {
-    const party = await this.partiesRepository.findByPartyId({ partyId: data.partyId, dungeonMasterId: data.dungeonMasterId })
+  async execute(data: Pick<IDeletePartyParams, 'partyId'>) {
+    const party = await this.partiesRepository.findById({ partyId: data.partyId })
 
-    if (!party) {
+    if (party.data === null) {
       throw new ResourceNotFoundError()
     }
 
-    await this.partiesRepository.delete({ partyId: data.partyId, dungeonMasterId: data.dungeonMasterId })
+    await this.partiesRepository.delete({ partyId: data.partyId })
   }
 }
