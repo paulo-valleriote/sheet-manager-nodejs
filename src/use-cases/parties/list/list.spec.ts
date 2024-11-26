@@ -33,9 +33,9 @@ describe('List parties use case', () => {
     ])
 
     const parties = await sut.execute({ dungeonMasterId: 'user-1' })
-    expect(parties).toHaveLength(2)
-    expect(parties[0].name).toBe('Party 1')
-    expect(parties[1].name).toBe('Party 2')
+    expect(parties.data).toHaveLength(2)
+    expect(parties.data[0].name).toBe('Party 1')
+    expect(parties.data[1].name).toBe('Party 2')
   })
 
   it('should not be able to list parties from another user', async () => {
@@ -50,11 +50,11 @@ describe('List parties use case', () => {
     ])
 
     const parties = await sut.execute({ dungeonMasterId: 'user-1' })
-    expect(parties).toHaveLength(0)
+    expect(parties.data).toHaveLength(0)
   })
 
   it('should return an empty array if no parties are found', async () => {
     const parties = await sut.execute({ dungeonMasterId: 'user-1' })
-    expect(parties).toHaveLength(0)
+    expect(parties.data).toHaveLength(0)
   })
 })

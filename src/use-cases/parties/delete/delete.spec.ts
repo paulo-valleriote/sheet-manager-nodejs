@@ -25,22 +25,20 @@ describe('Delete party use case', () => {
     })
 
     const partiesBeforeDelete = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    const createdPartyId = partiesBeforeDelete[0].id
+    const createdPartyId = partiesBeforeDelete.data[0].id
 
     await sut.execute({
       partyId: createdPartyId,
-      dungeonMasterId: 'user-1',
     })
 
     const partiesAfterDelete = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    expect(partiesAfterDelete).toHaveLength(0)
+    expect(partiesAfterDelete.data).toHaveLength(0)
   })
 
   it('should not be able to delete a party that does not exist', async () => {
     await expect(
       sut.execute({
         partyId: 'party-1',
-        dungeonMasterId: 'user-1',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

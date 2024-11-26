@@ -25,42 +25,19 @@ describe('Get party use case', () => {
     })
 
     const parties = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    const partyId = parties[0].id
+    const partyId = parties.data[0].id
 
     const party = await sut.execute({
       partyId,
-      dungeonMasterId: 'user-1',
     })
 
-    expect(party.name).toBe('Party 1')
-  })
-
-  it('should not be able to get a party from another user', async () => {
-
-    await createPartyUseCase.execute({
-      name: 'Party 1',
-      dungeonMasterId: 'user-1',
-      description: 'Party description',
-      imgUrl: 'https://example.com/image.png',
-      maxSize: 10,
-    })
-
-    const parties = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    const partyId = parties[0].id
-
-    await expect(
-      sut.execute({
-        partyId,
-        dungeonMasterId: 'user-2',
-      }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError)
+    expect(party.data?.name).toBe('Party 1')
   })
 
   it('should throw an error if no party is found', async () => {
     await expect(
       sut.execute({
         partyId: 'party-1',
-        dungeonMasterId: 'user-1',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })

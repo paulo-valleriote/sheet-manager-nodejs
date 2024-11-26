@@ -21,7 +21,7 @@ describe('Create party use case', () => {
     })
 
     const parties = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    expect(parties).toHaveLength(1)
-    expect(parties[0].name).toBe('Party 1')
+    expect(parties.data).toHaveLength(1)
+    expect(parties.data[0].name).toBe('Party 1')
   })
 })
