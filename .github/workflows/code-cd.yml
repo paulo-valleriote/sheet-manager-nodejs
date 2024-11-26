@@ -19,9 +19,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+
       - name: Create .env file
         run: |
-          echo '${{ toJSON(vars) }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' > .env
+          cat << EOF > .env
+          NODE_ENV=${{ vars.NODE_ENV }}
+          PORT=${{ vars.PORT }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DATABASE=${{ vars.POSTGRES_DATABASE }}
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          EOF
 
       - name: Install dependencies
         run: npm ci
