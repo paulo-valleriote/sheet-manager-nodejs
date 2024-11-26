@@ -15,6 +15,10 @@ export class RemoveMemberUseCase {
       throw new ResourceNotFoundError()
     }
 
+    if (member.data.role === 'dungeon_master') {
+      throw new Error('Dungeon master cannot be removed from the party')
+    }
+
     await this.partyMembersRepository.delete({
       partyId: data.partyId,
       userId: data.userId,
