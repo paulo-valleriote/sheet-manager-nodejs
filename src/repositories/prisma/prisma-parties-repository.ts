@@ -3,6 +3,7 @@ import type {
   ICreatePartyParams,
   IDeletePartyParams,
   IGetPartyParams,
+  IGetPartyResponse,
   IListPartiesParams,
   IUpdatePartyParams,
 } from '../@types/parties'
@@ -20,7 +21,17 @@ export class PrismaPartiesRepository implements IPartiesRepository {
       where: data,
     })
 
-    return parties
+    return { data: parties }
+  }
+
+  async findById(params: Pick<IGetPartyParams, 'partyId'>): Promise<IGetPartyResponse> {
+    const party = await prisma.party.findUnique({
+      where: {
+        id: params.partyId,
+      },
+    })
+
+    return { data: party ?? null }
   }
 
   async findAllByDungeonMasterId(
@@ -30,7 +41,7 @@ export class PrismaPartiesRepository implements IPartiesRepository {
       where: data,
     })
 
-    return parties
+    return { data: parties }
   }
 
   async findByPartyId(data: Pick<IGetPartyParams, 'dungeonMasterId' | 'partyId'>) {

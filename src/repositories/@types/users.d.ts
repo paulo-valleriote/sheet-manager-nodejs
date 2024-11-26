@@ -1,3 +1,4 @@
+import type { IUserRole } from '@/domain/entities/enums/user-roles'
 import type { IUser } from '@/domain/entities/user'
 
 interface IUserReadonlyOperationParams {
@@ -9,8 +10,10 @@ interface IGetUserParams extends IUserReadonlyOperationParams {
 }
 
 interface ICreateUserParams {
+  id?: string
   email: string
   passwordHash: string
+  role: IUserRole
 }
 
 interface IUpdateUserParams extends Partial<IUserReadonlyOperationParams> {

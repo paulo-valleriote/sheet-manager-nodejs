@@ -39,9 +39,10 @@ export class InMemoryUserRepository implements IUsersRepository {
 
   async create(data: ICreateUserParams): Promise<void> {
     this.users.push({
-      id: randomUUID(),
+      id: data.id ??randomUUID(),
       email: data.email,
       passwordHash: data.passwordHash,
+      role: data.role,
       createdAt: new Date(),
     })
   }
