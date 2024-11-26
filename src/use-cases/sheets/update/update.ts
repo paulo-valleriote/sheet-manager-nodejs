@@ -42,7 +42,6 @@ export class UpdateSheetUseCase {
     const parsedTemplateValues = this.parseTemplateValues(data.templateValues || [], originalTemplate.data)
     const updatedTemplateValues = await updateSheetModuleComponent(parsedTemplateValues, originalTemplate.data)
 
-    console.log('updatedTemplateValues', updatedTemplateValues)
     await this.sheetsRepository.update({ ...data, templateValues: JSON.stringify(updatedTemplateValues) }, id)
   }
 
