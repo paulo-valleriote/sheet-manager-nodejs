@@ -69,7 +69,11 @@ The project includes comprehensive test coverage using Vitest. Tests are organiz
 
 To run tests:
 ```bash
+# Run unit tests
 npm run test
+
+# Run E2E tests
+npm run test:e2e
 ```
 
 ## 🏃 Running the API
