@@ -6,4 +6,5 @@ export const ROUTE = {
   usersAndAuthentication: '/',
   sheets: '/users/:userId/sheets',
   sheetTemplates: '/sheets/templates',
+  parties: '/parties'
 }

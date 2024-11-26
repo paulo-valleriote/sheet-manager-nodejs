@@ -1,5 +1,4 @@
 import type { IBaseEntityWithUpdatedAt } from './base-entity'
-import type { IUser } from './user'
 
 /**
  * Party entity
@@ -13,9 +12,8 @@ import type { IUser } from './user'
  */
 export interface IParty extends IBaseEntityWithUpdatedAt {
   name: string
-  description: string
-  imgUrl: string
-  maxSize: number
-  players: IUser[]
-  dungeonMaster: IUser
+  description: string | null
+  imgUrl: string | null
+  maxSize: number | null
+  dungeonMasterId: string
 }
