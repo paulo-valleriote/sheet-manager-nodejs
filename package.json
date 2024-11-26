@@ -20,13 +20,24 @@
     "test:e2e:watch": "vitest watch --dir src/http",
     "test:coverage": "vitest run --coverage"
   },
-  "keywords": ["nodejs", "fastify", "prisma", "typescript", "jwt", "bcryptjs", "zod", "rpg", "sheets"],
+  "keywords": [
+    "nodejs",
+    "fastify",
+    "prisma",
+    "typescript",
+    "jwt",
+    "bcryptjs",
+    "zod",
+    "rpg",
+    "sheets"
+  ],
   "author": "Paulo Valleriote",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@fastify/cookie": "11.0.1",
     "@fastify/jwt": "9.0.1",
+    "@fastify/redis": "7.0.1",
     "@prisma/client": "5.22.0",
     "bcryptjs": "2.4.3",
     "dotenv": "16.4.5",
