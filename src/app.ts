@@ -3,6 +3,7 @@ import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import Fastify from 'fastify'
 import { ZodError } from 'zod'
+import { partiesRoutes } from './http/controllers/parties/routes'
 import { ROUTE } from './http/controllers/routes.index'
 import { sheetTemplatesRoutes } from './http/controllers/sheet-templates/routes'
 import { sheetsRoutes } from './http/controllers/sheets/routes'
@@ -43,6 +44,9 @@ app.register(sheetsRoutes, {
 })
 app.register(sheetTemplatesRoutes, {
   prefix: ROUTE.sheetTemplates,
+})
+app.register(partiesRoutes, {
+  prefix: ROUTE.parties,
 })
 
 // Global error handler
