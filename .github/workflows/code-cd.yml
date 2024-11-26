@@ -1,10 +1,11 @@
 name: Node.js CD
 
-
 on:
   push:
     branches:
       - main
+env:
+  env_var: ${{ github.ref_name }}
 
 jobs:
   build:
@@ -18,8 +19,24 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
-      - run: npm run build
+      - name: Create .env file
+        run: |
+          echo '${{ toJSON(vars) }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' > .env
 
-      - run: npm i -g pm2
-      - run: pm2 start build/server.js --name "sheet-manager-api"
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Stop existing process
+        run: pm2 delete "sheet-manager-api" || true
+
+      - name: Check and install PM2
+        run: |
+          if ! command -v pm2 &> /dev/null; then
+            npm i -g pm2
+          fi
+
+      - name: Start application
+        run: pm2 start build/server.js --name "sheet-manager-api" --update-env
