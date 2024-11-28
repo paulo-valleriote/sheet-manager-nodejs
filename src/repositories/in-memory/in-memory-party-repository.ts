@@ -18,6 +18,8 @@ export class InMemoryPartyRepository implements IPartiesRepository {
       id: data.id ?? randomUUID(),
       createdAt: new Date(),
     })
+
+    return { data: { id: this.data[this.data.length - 1].id } }
   }
 
   async findById(params: Pick<IGetPartyParams, 'partyId'>) {

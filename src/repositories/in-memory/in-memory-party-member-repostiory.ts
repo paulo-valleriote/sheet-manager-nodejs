@@ -82,4 +82,10 @@ export class InMemoryPartyMemberRepository implements IPartyMembersRepository {
       return partyMember.partyId !== data.partyId && partyMember.userId !== data.userId
     })
   }
+
+  async deleteAll(params: Pick<IDeletePartyMemberParams, 'partyId'>): Promise<void> {
+    this.partyMembers = this.partyMembers.filter((partyMember) => {
+      return partyMember.partyId !== params.partyId
+    })
+  }
 }

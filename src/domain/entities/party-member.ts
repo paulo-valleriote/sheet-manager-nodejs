@@ -1,4 +1,4 @@
-import type { IBaseEntityWithUpdatedAt } from './base-entity'
+import type { IBaseEntity } from './base-entity'
 import type { IPartyRoles } from './enums/party-roles'
 
 /**
@@ -8,7 +8,7 @@ import type { IPartyRoles } from './enums/party-roles'
  * @property {string} userId - User id
  * @property {IPartyRoles} role - Role of the user in the party
  */
-export interface IPartyMember extends IBaseEntityWithUpdatedAt {
+export interface IPartyMember extends IBaseEntity {
   partyId: string
   userId: string
   role: IPartyRoles

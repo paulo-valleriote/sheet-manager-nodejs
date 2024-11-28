@@ -1,10 +1,23 @@
+import { IPartyRoles } from '@/domain/entities/enums/party-roles'
 import type { ICreatePartyParams } from '@/repositories/@types/parties'
 import type { IPartiesRepository } from '@/repositories/parties-repository'
+import type { IPartyMembersRepository } from '@/repositories/party-members-repository'
 
 export class CreatePartyUseCase {
-  constructor(private partiesRepository: IPartiesRepository) {}
+  constructor(
+    private partiesRepository: IPartiesRepository,
+    private partyMembersRepository: IPartyMembersRepository,
+  ) {}
 
   async execute(data: ICreatePartyParams) {
-    await this.partiesRepository.create(data)
+    const {
+      data: { id },
+    } = await this.partiesRepository.create(data)
+
+    await this.partyMembersRepository.create({
+      partyId: id,
+      userId: data.dungeonMasterId,
+      role: IPartyRoles.DUNGEON_MASTER,
+    })
   }
 }

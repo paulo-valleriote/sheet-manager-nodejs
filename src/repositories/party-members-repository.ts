@@ -12,4 +12,5 @@ export interface IPartyMembersRepository {
   findBy(params: Partial<IGetPartyMemberParams>): Promise<IGetPartyMemberResponse>
   findAll(params: IListPartyMembersParams): Promise<IListPartyMembersResponse>
   delete(data: IDeletePartyMemberParams): Promise<void>
+  deleteAll(params: Pick<IDeletePartyMemberParams, 'partyId'>): Promise<void>
 }

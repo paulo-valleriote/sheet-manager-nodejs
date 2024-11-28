@@ -11,9 +11,11 @@ import type { IPartiesRepository } from '../parties-repository'
 
 export class PrismaPartiesRepository implements IPartiesRepository {
   async create(data: ICreatePartyParams) {
-    await prisma.party.create({
+    const party = await prisma.party.create({
       data,
     })
+
+    return { data: party }
   }
 
   async findAll(data: IListPartiesParams) {

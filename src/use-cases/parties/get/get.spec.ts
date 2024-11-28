@@ -1,3 +1,4 @@
+import { InMemoryPartyMemberRepository } from '@/repositories/in-memory/in-memory-party-member-repostiory'
 import { InMemoryPartyRepository } from '@/repositories/in-memory/in-memory-party-repository'
 import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -6,12 +7,14 @@ import { GetPartyUseCase } from './get'
 
 describe('Get party use case', () => {
   let partyRepository: InMemoryPartyRepository
+  let partyMembersRepository: InMemoryPartyMemberRepository
   let createPartyUseCase: CreatePartyUseCase
   let sut: GetPartyUseCase
 
   beforeEach(() => {
     partyRepository = new InMemoryPartyRepository()
-    createPartyUseCase = new CreatePartyUseCase(partyRepository)
+    partyMembersRepository = new InMemoryPartyMemberRepository()
+    createPartyUseCase = new CreatePartyUseCase(partyRepository, partyMembersRepository)
     sut = new GetPartyUseCase(partyRepository)
   })
 

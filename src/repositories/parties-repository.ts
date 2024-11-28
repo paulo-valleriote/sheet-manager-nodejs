@@ -1,5 +1,6 @@
 import type {
   ICreatePartyParams,
+  ICreatePartyResponse,
   IDeletePartyParams,
   IGetPartyParams,
   IGetPartyResponse,
@@ -9,7 +10,7 @@ import type {
 } from '@/repositories/@types/parties'
 
 export interface IPartiesRepository {
-  create(data: ICreatePartyParams): Promise<void>
+  create(data: ICreatePartyParams): Promise<ICreatePartyResponse>
   findAll(params: IListPartiesParams): Promise<IListPartiesResponse>
   findById(params: Pick<IGetPartyParams, 'partyId'>): Promise<IGetPartyResponse>
   findAllByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>): Promise<IListPartiesResponse>
