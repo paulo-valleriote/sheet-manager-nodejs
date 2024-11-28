@@ -15,7 +15,7 @@ export class RemoveMemberUseCase {
       throw new ResourceNotFoundError()
     }
 
-    if (member.data.role === 'dungeon_master') {
+    if (member.data.role === 'DUNGEON_MASTER') {
       throw new Error('Dungeon master cannot be removed from the party')
     }
 
