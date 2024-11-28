@@ -33,15 +33,19 @@ interface ICreatePartyMemberParams extends Optional<IPartyMember, 'id' | 'create
   role: IPartyRoles
   userId: string
   partyId: string
+  sheetId?: string
 }
 
 /**
  * Parameters for updating a party member
  * @property {string} userId - Unique identifier of the user
  * @property {IPartyRoles} [role] - Optional new role for the member
+ * @property {string} [sheetId] - Optional new sheet id for the member
  */
-interface IUpdatePartyMemberParams extends Omit<IPartyMemberReadonlyOperationParams, 'partyId'> {
+interface IUpdatePartyMemberParams extends IPartyMemberReadonlyOperationParams {
+  id?: string
   role?: IPartyRoles
+  sheetId?: string
 }
 
 /**

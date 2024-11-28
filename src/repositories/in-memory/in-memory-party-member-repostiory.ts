@@ -7,6 +7,7 @@ import type {
   IGetPartyMemberResponse,
   IListPartyMembersParams,
   IListPartyMembersResponse,
+  IUpdatePartyMemberParams,
 } from '../@types/party-members'
 import type { IPartyMembersRepository } from '../party-members-repository'
 
@@ -18,6 +19,12 @@ export class InMemoryPartyMemberRepository implements IPartyMembersRepository {
       id: randomUUID(),
       ...data,
       createdAt: new Date(),
+    })
+  }
+
+  async update(data: IUpdatePartyMemberParams): Promise<void> {
+    this.partyMembers = this.partyMembers.map((partyMember) => {
+      return partyMember.id === data.id ? { ...partyMember, ...data } : partyMember
     })
   }
 

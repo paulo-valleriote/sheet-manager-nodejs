@@ -23,12 +23,11 @@ interface IGetSheetParams extends ISheetReadonlyOperationParams {}
  * @property {string} pcSpecie - The character species
  * @property {Date} [createdAt] - Creation timestamp
  * @property {Date} [updatedAt] - Last update timestamp
- * @property {boolean} [isActive] - Sheet active status
  * @property {boolean} [isEditable] - Sheet edit permission status
  * @property {string} [sheetTemplateId] - Template identifier
  * @property {string} [templateValues] - Template custom values
  */
-interface ICreateSheetParams extends Optional<ISheet, 'id' | 'createdAt' | 'updatedAt' | 'isActive' | 'isEditable' | 'sheetTemplateId' | 'templateValues'> {}
+interface ICreateSheetParams extends Optional<ISheet, 'id' | 'createdAt' | 'updatedAt' | 'isEditable' | 'sheetTemplateId' | 'templateValues'> {}
 
 /**
  * Parameters for updating an existing sheet

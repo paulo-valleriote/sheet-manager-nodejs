@@ -7,28 +7,54 @@ import type {
   IGetPartyMemberResponse,
   IListPartyMembersParams,
   IListPartyMembersResponse,
+  IUpdatePartyMemberParams,
 } from '../@types/party-members'
 import type { IPartyMembersRepository } from '../party-members-repository'
 
 export class PrismaPartyMembersRepository implements IPartyMembersRepository {
   async create(data: ICreatePartyMemberParams): Promise<void> {
+    const { sheetId, partyId, userId, ...updateData } = data
+
     await prisma.partyMember.create({
       data: {
-        role: data.role,
+        ...updateData,
+        sheet: {
+          connect: {
+            id: sheetId,
+          },
+        },
         party: {
           connect: {
-            id: data.partyId,
+            id: partyId,
           },
         },
         user: {
           connect: {
-            id: data.userId,
+            id: userId,
           },
         },
       },
     })
   }
-  
+
+  async update(data: IUpdatePartyMemberParams): Promise<void> {
+    const { sheetId, partyId, userId, ...updateData } = data 
+
+    await prisma.partyMember.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        ...updateData,
+        sheet: sheetId ? {
+          connect: {
+            id: sheetId,
+          },
+        } : undefined,
+      },
+    })
+  }
+
   async findBy(params: Partial<IGetPartyMemberParams>): Promise<IGetPartyMemberResponse> {
     const partyMember = await prisma.partyMember.findFirst({
       where: {
@@ -45,6 +71,7 @@ export class PrismaPartyMembersRepository implements IPartyMembersRepository {
       data: {
         ...partyMember,
         role: partyMember.role as IPartyRoles,
+        sheetId: partyMember.sheetId ?? undefined,
       },
     }
   }
@@ -57,6 +84,7 @@ export class PrismaPartyMembersRepository implements IPartyMembersRepository {
       data: partyMembers.map((partyMember) => ({
         ...partyMember,
         role: partyMember.role as IPartyRoles,
+        sheetId: partyMember.sheetId ?? undefined,
       })),
     }
   }
