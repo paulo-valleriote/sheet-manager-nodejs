@@ -29,7 +29,7 @@ interface IListPartyMembersParams extends Optional<IPartyMemberReadonlyOperation
  * @property {Date} [createdAt] - Optional creation timestamp
  * @property {Date} [updatedAt] - Optional last update timestamp
  */
-interface ICreatePartyMemberParams extends Optional<IPartyMember, 'id' | 'createdAt' | 'updatedAt'> {
+interface ICreatePartyMemberParams extends Optional<IPartyMember, 'id' | 'createdAt'> {
   role: IPartyRoles
   userId: string
   partyId: string

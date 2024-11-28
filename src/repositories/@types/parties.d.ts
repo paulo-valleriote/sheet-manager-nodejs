@@ -46,6 +46,10 @@ interface IUpdatePartyParams extends Omit<IPartyReadonlyOperationParams, 'partyI
  */
 interface IDeletePartyParams extends IPartyReadonlyOperationParams {}
 
+interface ICreatePartyResponse {
+  data: Pick<IParty, 'id'>
+}
+
 /** Response structure for getting a single party
  * @property {IParty | null} data - The retrieved party data or null if not found
  */
@@ -66,6 +70,7 @@ export type {
   IListPartiesParams,
   IListPartiesResponse,
   ICreatePartyParams,
+  ICreatePartyResponse,
   IUpdatePartyParams,
   IDeletePartyParams,
 }
