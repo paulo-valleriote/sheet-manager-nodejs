@@ -1,5 +1,5 @@
 import type { ISheetTemplatesRepository } from '@/repositories/sheet-templates-repository'
-import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
 
 interface IGetSheetTemplateProps {
   id: string

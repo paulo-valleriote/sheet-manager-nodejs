@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto'
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
 import { HandleModuleContentGuardType } from '@/domain/entities/sheet/module-content'
 import type { IModuleComponent } from '@/domain/entities/sheet/module-content'
-import { InvalidBodyIntoModuleComponentError } from '@/use-cases/errors/invalid-body-into-module-component'
+import { InvalidBodyIntoModuleComponentError } from '@/use-cases/_errors/invalid-body-into-module-component'
 import { z } from 'zod'
 
 /**

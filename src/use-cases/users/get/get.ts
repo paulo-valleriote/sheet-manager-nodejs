@@ -1,6 +1,6 @@
 import type { IGetUserParams } from '@/repositories/@types/users'
 import type { IUsersRepository } from '@/repositories/users-repository'
-import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../../_errors/resource-not-found-error'
 
 export class GetUserUseCase {
   constructor(private userRepository: IUsersRepository) {}

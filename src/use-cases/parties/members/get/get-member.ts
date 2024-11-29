@@ -1,6 +1,6 @@
 import type { IGetPartyMemberParams } from '@/repositories/@types/party-members'
 import type { IPartyMembersRepository } from '@/repositories/party-members-repository'
-import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
 
 export class GetMemberUseCase {
   constructor(private partyMembersRepository: IPartyMembersRepository) {}

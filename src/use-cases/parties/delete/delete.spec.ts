@@ -1,6 +1,6 @@
 import { InMemoryPartyMemberRepository } from '@/repositories/in-memory/in-memory-party-member-repostiory'
 import { InMemoryPartyRepository } from '@/repositories/in-memory/in-memory-party-repository'
-import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreatePartyUseCase } from '../create/create'
 import { DeletePartyUseCase } from './delete'

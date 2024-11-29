@@ -1,6 +1,6 @@
 import type { IUpdatePartyParams } from '@/repositories/@types/parties'
 import type { IPartiesRepository } from '@/repositories/parties-repository'
-import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
 
 export class UpdatePartyUseCase {
   constructor(private partiesRepository: IPartiesRepository) {}
