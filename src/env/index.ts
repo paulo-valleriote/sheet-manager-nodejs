@@ -7,6 +7,16 @@ const envBodySchema = z.object({
   DATABASE_URL: z.string().url(),
   //CACHE_DB_URL: z.string().url(),
   JWT_SECRET: z.string(),
+  MAIL_HOST: z.string(),
+  MAIL_PORT: z.coerce.number(),
+  MAIL_IS_SECURE: z.coerce.boolean(),
+  MAIL_USER: z.string(),
+  MAIL_PASS: z.string(),
+  MAIL_TEST_HOST: z.string().optional(),
+  MAIL_TEST_PORT: z.coerce.number().optional(),
+  MAIL_TEST_IS_SECURE: z.coerce.boolean().optional(),
+  MAIL_TEST_USER: z.string().optional(),
+  MAIL_TEST_PASS: z.string().optional(),
 })
 
 const parsedEnv = envBodySchema.safeParse(process.env)
