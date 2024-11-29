@@ -24,7 +24,9 @@ interface IListPartiesParams extends Pick<IPartyReadonlyOperationParams, 'dungeo
  * @property {number} maxSize - Maximum number of players allowed
  * @property {string} dungeonMasterId - Unique identifier of the Dungeon Master
  */
-interface ICreatePartyParams extends Optional<IParty, 'id' | 'createdAt' | 'updatedAt'> {}
+interface ICreatePartyParams extends Optional<IParty, 'id' | 'createdAt' | 'updatedAt'> {
+  sheetId?: string
+}
 
 /** Parameters for updating an existing party
  * @property {string} dungeonMasterId - Unique identifier of the Dungeon Master

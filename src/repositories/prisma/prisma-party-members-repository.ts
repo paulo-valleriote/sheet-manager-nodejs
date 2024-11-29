@@ -18,11 +18,12 @@ export class PrismaPartyMembersRepository implements IPartyMembersRepository {
     await prisma.partyMember.create({
       data: {
         ...updateData,
-        sheet: {
+        sheet: sheetId ? {
           connect: {
             id: sheetId,
-          },
-        },
+              },
+            }
+          : undefined,
         party: {
           connect: {
             id: partyId,

@@ -4,10 +4,10 @@ import { z } from 'zod'
 
 export async function createParty(request: FastifyRequest, reply: FastifyReply) {
   const data = parseRequest(request)
-
+  console.log('data', data)
   const createPartyUseCase = makeCreatePartyUseCase()
-  await createPartyUseCase.execute(data)
 
+  await createPartyUseCase.execute(data)
   return reply.status(201).send()
 }
 
@@ -21,6 +21,7 @@ function parseRequest(request: FastifyRequest) {
     description: z.string().min(1),
     imgUrl: z.string().min(1),
     maxSize: z.number().min(1),
+    sheetId: z.string().uuid().optional(),
   })
 
   const createParams = createPartyParamsSchema.parse({ dungeonMasterId: request.user.sub })

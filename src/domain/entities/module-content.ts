@@ -1,4 +1,4 @@
-import type { ISheetModuleTypes } from './enums/sheet-module-types'
+import { ISheetModuleTypes } from './enums/sheet-module-types'
 
 /**
  * Root module entity
@@ -80,18 +80,18 @@ export type IModuleComponent =
 
 export class HandleModuleContentGuardType {
   isTextComponent(content: IModuleComponent): content is IModuleTextComponent {
-    return 'label' in content || 'placeholder' in content || 'value' in content
+    return content.type === ISheetModuleTypes.TEXT
   }
 
   isSelectComponent(content: IModuleComponent): content is IModuleSelectComponent {
-    return 'options' in content
+    return content.type === ISheetModuleTypes.SELECT
   }
 
   isListComponent(content: IModuleComponent): content is IModuleListComponent {
-    return 'items' in content
+    return content.type === ISheetModuleTypes.LIST
   }
 
   isContainerComponent(content: IModuleComponent): content is IModuleContainerComponent {
-    return 'children' in content
+    return content.type === ISheetModuleTypes.CONTAINER
   }
 }

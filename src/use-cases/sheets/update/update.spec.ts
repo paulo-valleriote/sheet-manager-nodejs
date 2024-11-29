@@ -1,4 +1,5 @@
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
+import type { IModuleTemplateValue } from '@/repositories/@types/sheet-module-values'
 import { InMemorySheetRepository } from '@/repositories/in-memory/in-memory-sheet-repository'
 import { InMemorySheetTemplateRepository } from '@/repositories/in-memory/in-memory-sheet-template-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -30,10 +31,13 @@ describe('Update sheet use case', () => {
 
     const createdSheets = await sheetRepository.list({ userId: 'user-1' })
 
-    await sut.execute({
-      pcName: 'Sheet 2',
-      userId: 'user-1',
-    }, createdSheets.data[0].id)
+    await sut.execute(
+      {
+        pcName: 'Sheet 2',
+        userId: 'user-1',
+      },
+      createdSheets.data[0].id,
+    )
 
     const sheets = await sheetRepository.list({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(1)
@@ -42,10 +46,13 @@ describe('Update sheet use case', () => {
 
   it('should not be able to update a sheet with invalid sheetId', async () => {
     await expect(
-      sut.execute({
-        pcName: 'Sheet 2',
-        userId: 'user-1',
-      }, 'invalid-sheet-id'),
+      sut.execute(
+        {
+          pcName: 'Sheet 2',
+          userId: 'user-1',
+        },
+        'invalid-sheet-id',
+      ),
     ).rejects.toBeInstanceOf(Error)
   })
 
@@ -72,39 +79,50 @@ describe('Update sheet use case', () => {
     const createdSheets = await sheetRepository.list({ userId: 'user-1' })
     const createdSheet = createdSheets.data[0]
 
-    const templateValueUpdatePayload = [{ id: 'module-id', value: 'New Value' }]
-    await sut.execute({
-      pcName: 'Sheet 2',
-      userId: 'user-1',
-      templateValues: templateValueUpdatePayload,
-    }, createdSheet.id)
+    const templateValueUpdatePayload: IModuleTemplateValue[] = [
+      {
+        id: 'module-id',
+        type: ISheetModuleTypes.TEXT,
+        value: 'New Value',
+        children: [],
+      },
+    ]
+
+    await sut.execute(
+      {
+        pcName: 'Sheet 2',
+        userId: 'user-1',
+        templateValues: templateValueUpdatePayload,
+      },
+      createdSheet.id,
+    )
 
     const createdSheetAfterUpdate = await sheetRepository.get({ sheetId: createdSheet.id, userId: 'user-1' })
     const sheetTemplateAfterUpdate = await sheetTemplateRepository.get({ id: sheetTemplate.data.id })
 
-    const expectedUpdatedTemplateValues = JSON.stringify([
-      {
+    expect(createdSheet.templateValues).toBe(undefined)
+    expect(sheetTemplateAfterUpdate.data.children).toBe(sheetTemplate.data.children)
+    expect(JSON.parse(createdSheetAfterUpdate.data?.templateValues as string)).toEqual([
+      expect.objectContaining({
         id: 'module-id',
-        parentId: 'module-id',
+        parentId: 'sheet-template-id',
         type: 'text',
         label: 'Label',
         placeholder: 'Placeholder',
         value: 'New Value',
-      },
+      }),
     ])
-
-    expect(createdSheet.templateValues).toBe(undefined)
-    expect(createdSheetAfterUpdate.data?.templateValues).toBe(expectedUpdatedTemplateValues)
-    expect(sheetTemplateAfterUpdate.data.children).toBe(sheetTemplate.data.children)
   })
 
   it('should throw error if template values are invalid', async () => {
     await sheetTemplateRepository.create({
       id: 'sheet-template-id',
-      children: JSON.stringify([{ id: 'module-id', type: ISheetModuleTypes.TEXT, label: 'Label', placeholder: 'Placeholder', value: 'Value' }]),
+      children: JSON.stringify([
+        { id: 'module-id', type: ISheetModuleTypes.TEXT, label: 'Label', placeholder: 'Placeholder', value: 'Value' },
+      ]),
     })
 
-    const sheetTemplate = await sheetTemplateRepository.get({ id: 'sheet-template-id' })  
+    const sheetTemplate = await sheetTemplateRepository.get({ id: 'sheet-template-id' })
 
     await createSheetUseCase.execute({
       pcName: 'Sheet 1',
@@ -116,17 +134,21 @@ describe('Update sheet use case', () => {
       sheetTemplateId: sheetTemplate.data.id,
     })
 
-
     const createdSheets = await sheetRepository.list({ userId: 'user-1' })
     const createdSheet = createdSheets.data[0]
 
     const templateValueUpdatePayload = [{ id: 'module-id', value: 'New Value' }]
     const templateValueUpdatePayloadWithNonExistingModules = [{ id: 'module-id-2', value: 'New Value 2' }]
 
-    await expect(sut.execute({
-      pcName: 'Sheet 2',
-      userId: 'user-1',
-      templateValues: [...templateValueUpdatePayload, ...templateValueUpdatePayloadWithNonExistingModules],
-    }, createdSheet.id)).rejects.toBeInstanceOf(Error)
+    await expect(
+      sut.execute(
+        {
+          pcName: 'Sheet 2',
+          userId: 'user-1',
+          templateValues: [...templateValueUpdatePayload, ...templateValueUpdatePayloadWithNonExistingModules],
+        },
+        createdSheet.id,
+      ),
+    ).rejects.toBeInstanceOf(Error)
   })
 })

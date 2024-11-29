@@ -3,11 +3,17 @@
  * @interface ITextTemplateValue
  * @extends {ITemplateValue}
  * @property {string} id - Unique identifier for the template value
- * @property {string} [value] - Optional value for the text input
+ * @property {string} type - Type of the template value
  * @property {string} label - Display label for the text input
- * @property {string} [placeholder] - Optional placeholder text
  */
-interface ITextTemplateValue extends ITemplateValue {
+interface IBaseTemplateValue {
+  id: string;
+  type: ISheetModuleTypes;
+  value?: string;
+}
+
+interface ITextTemplateValue extends IBaseTemplateValue {
+  type: ISheetModuleTypes.TEXT;
   label: string;
   placeholder?: string;
 }
@@ -20,7 +26,8 @@ interface ITextTemplateValue extends ITemplateValue {
  * @property {string} [value] - Optional value for the list
  * @property {Array<{id: string, label: string, value?: string}>} items - Array of list items
  */
-interface IListTemplateValue extends ITemplateValue {
+interface IListTemplateValue extends IBaseTemplateValue {
+  type: ISheetModuleTypes.LIST;
   items: Array<{ id: string; label: string; value?: string }>;
 }
 
@@ -32,8 +39,15 @@ interface IListTemplateValue extends ITemplateValue {
  * @property {string} [value] - Optional value for the select
  * @property {Array<{id: string, label: string, value?: string, default?: boolean, selected?: boolean}>} options - Array of select options
  */
-interface ISelectTemplateValue extends ITemplateValue {
-  options: Array<{ id: string; label: string; value?: string; default?: boolean; selected?: boolean }>;
+interface ISelectTemplateValue extends IBaseTemplateValue {
+  type: ISheetModuleTypes.SELECT;
+  options: Array<{ 
+    id: string; 
+    label: string; 
+    value?: string; 
+    default?: boolean; 
+    selected?: boolean 
+  }>;
 }
 
 /**
@@ -44,14 +58,15 @@ interface ISelectTemplateValue extends ITemplateValue {
  * @property {string} [value] - Optional value for the container
  * @property {ITemplateValue[]} children - Array of child template values
  */
-interface IContainerTemplateValue extends ITemplateValue {
-  children: ITemplateValue[];
+interface IContainerTemplateValue extends IBaseTemplateValue {
+  type: ISheetModuleTypes.CONTAINER;
+  children: IModuleTemplateValue[];
 }
 
-type IModuleTemplateValue =
-  | ITextTemplateValue
-  | IListTemplateValue
-  | ISelectTemplateValue
+type IModuleTemplateValue = 
+  | ITextTemplateValue 
+  | IListTemplateValue 
+  | ISelectTemplateValue 
   | IContainerTemplateValue;
 
 export type { 

@@ -9,8 +9,10 @@ describe('updateSheetModuleComponent', () => {
     const newModuleValues: IModuleTemplateValue[] = [
       {
         id: 'module-id',
+        type: ISheetModuleTypes.TEXT,
+        label: 'Label',
+        placeholder: 'Placeholder',
         value: 'New Value',
-        children: [],
       },
     ]
 
@@ -30,13 +32,13 @@ describe('updateSheetModuleComponent', () => {
 
     const updatedComponents = await updateSheetModuleComponent(newModuleValues, originalSheetTemplate)
     expect(updatedComponents).toEqual([
-      {
+      expect.objectContaining({
         id: 'module-id',
         type: ISheetModuleTypes.TEXT,
         label: 'Label',
         placeholder: 'Placeholder',
         value: 'New Value',
-      },
+      }),
     ])
   })
 

@@ -17,6 +17,7 @@ export class CreatePartyUseCase {
     await this.partyMembersRepository.create({
       partyId: id,
       userId: data.dungeonMasterId,
+      sheetId: data.sheetId ?? undefined,
       role: IPartyRoles.DUNGEON_MASTER,
     })
   }
