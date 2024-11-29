@@ -1,4 +1,4 @@
-import { ISheetModuleTypes } from './enums/sheet-module-types'
+import { ISheetModuleTypes } from '../enums/sheet-module-types'
 
 /**
  * Root module entity

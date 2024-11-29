@@ -1,4 +1,4 @@
-import type { IBaseEntityWithUpdatedAt } from './base-entity'
+import type { IBaseEntityWithUpdatedAt } from '../base-entity'
 
 /**
  * SheetTemplate entity

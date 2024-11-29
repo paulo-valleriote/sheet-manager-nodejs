@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { IParty } from '@/domain/entities/party'
+import type { IParty } from '@/domain/entities/party/party'
 import type { IPartiesRepository } from '@/repositories/parties-repository'
 import type {
   ICreatePartyParams,

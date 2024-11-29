@@ -1,5 +1,5 @@
-import type { IBaseEntity } from './base-entity'
-import type { IPartyRoles } from './enums/party-roles'
+import type { IBaseEntity } from '../base-entity'
+import type { IPartyRoles } from '../enums/party-roles'
 
 /**
  * Party member entity

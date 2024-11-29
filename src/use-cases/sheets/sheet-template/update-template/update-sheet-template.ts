@@ -1,4 +1,4 @@
-import type { IModuleComponent } from '@/domain/entities/module-content'
+import type { IModuleComponent } from '@/domain/entities/sheet/module-content'
 import type { ISheetTemplatesRepository } from '@/repositories/sheet-templates-repository'
 import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
 import { verifyAndParseComponents } from '@/utils/sheet-modules/parse-and-validate-module-components'

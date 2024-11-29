@@ -1,5 +1,5 @@
-import type { IBaseEntity } from './base-entity'
-import type { IUserRole } from './enums/user-roles'
+import type { IBaseEntity } from '../base-entity'
+import type { IUserRole } from '../enums/user-roles'
 
 /**
  * User entity
