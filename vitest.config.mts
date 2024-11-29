@@ -1,11 +1,9 @@
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-export default defineConfig({
-  test: {
-    dir: 'src',
-    environmentMatchGlobs: [['src/http/controllers/**', 'prisma']],
-    globals: true
-  },
+export const baseConfig = defineConfig({
   plugins: [tsconfigPaths()],
+  test: {
+    globals: true,
+  },
 })

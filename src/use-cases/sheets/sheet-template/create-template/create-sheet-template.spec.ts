@@ -69,7 +69,7 @@ describe('Create sheet template use case', () => {
           id: 'module-id',
           parentId: sheetId,
           type: ISheetModuleTypes.LIST,
-          items: [{ label: 'Item label', value: 'Item value' }],
+          items: [{ id: 'item-id', label: 'Item label', value: 'Item value' }],
         },
       ],
     })
@@ -89,21 +89,6 @@ describe('Create sheet template use case', () => {
         }),
       ]),
     )
-  })
-
-  it('should throw an error if new module type list is invalid', async () => {
-    await expect(
-      sut.execute({
-        children: [
-          {
-            id: 'module-id',
-            parentId: 'sheet-id',
-            type: ISheetModuleTypes.LIST,
-            items: [{ label: 'Item label', value: '' }],
-          },
-        ],
-      }),
-    ).rejects.toBeInstanceOf(InvalidBodyIntoModuleComponentError)
   })
 
   it('should be able to create a new module type container', async () => {

@@ -8,7 +8,6 @@ import type { IBaseEntityWithUpdatedAt } from './base-entity'
  * @property {string} pcSpecie - Player character specie
  * @property {string} pcRole - Player character role
  * @property {string} owner - Owner name
- * @property {boolean} isActive - Is active
  * @property {boolean} isEditable - Is editable
  * @property {string} userId - User id
  * @property {string} sheetTemplateId - Sheet template id
@@ -20,7 +19,6 @@ export interface ISheet extends IBaseEntityWithUpdatedAt {
   pcSpecie?: string
   pcRole?: string
   owner: string
-  isActive: boolean
   isEditable: boolean
   userId: string
   sheetTemplateId?: string

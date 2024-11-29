@@ -15,22 +15,28 @@ export class InMemoryPartyRepository implements IPartiesRepository {
   async create(data: ICreatePartyParams) {
     this.data.push({
       ...data,
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       createdAt: new Date(),
     })
+
+    return { data: { id: this.data[this.data.length - 1].id } }
   }
 
-  async findByPartyId(params: Pick<IGetPartyParams, 'partyId' | 'dungeonMasterId'>) {
-    return this.data.find((party) => party.id === params.partyId && party.dungeonMasterId === params.dungeonMasterId) ?? null
+  async findById(params: Pick<IGetPartyParams, 'partyId'>) {
+    const party = this.data.find((party) => party.id === params.partyId) ?? null
+    return { data: party }
   }
 
   async findAllByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>) {
-    return this.data.filter((party) => party.dungeonMasterId === params.dungeonMasterId)
+    const parties = this.data.filter((party) => party.dungeonMasterId === params.dungeonMasterId)
+    return { data: parties }
   }
   
   async findAll(params: IListPartiesParams) {
-    return this.data.filter((party) => party.dungeonMasterId === params.dungeonMasterId)
+    const parties = this.data.filter((party) => party.dungeonMasterId === params.dungeonMasterId)
+    return { data: parties }
   }
+
   async update(params: IUpdatePartyParams, id: string) {
     const partyIndex = this.data.findIndex((party) => party.id === id)
     this.data[partyIndex] = { ...this.data[partyIndex], ...params }

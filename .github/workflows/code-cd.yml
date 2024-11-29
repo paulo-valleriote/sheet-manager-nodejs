@@ -30,6 +30,16 @@ jobs:
           POSTGRES_DATABASE=${{ vars.POSTGRES_DATABASE }}
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
+          MAIL_USER=${{ secrets.MAIL_USER }}
+          MAIL_PASS=${{ secrets.MAIL_PASS }}
+          MAIL_HOST=${{ secrets.MAIL_HOST }}
+          MAIL_PORT=${{ secrets.MAIL_PORT }}
+          MAIL_IS_SECURE=${{ secrets.MAIL_IS_SECURE }}
+          MAIL_TEST_HOST=${{ secrets.MAIL_TEST_HOST }}
+          MAIL_TEST_PORT=${{ secrets.MAIL_TEST_PORT }}
+          MAIL_TEST_USER=${{ secrets.MAIL_TEST_USER }}
+          MAIL_TEST_PASS=${{ secrets.MAIL_TEST_PASS }}
+          MAIL_TEST_IS_SECURE=${{ secrets.MAIL_TEST_IS_SECURE }}
           EOF
 
       - name: Install dependencies
@@ -48,4 +58,4 @@ jobs:
           fi
 
       - name: Start application
-        run: pm2 start build/server.js --name "sheet-manager-api" --update-env
+        run: pm2 start build/server.js --name "sheet-manager-api" --watch --update-env

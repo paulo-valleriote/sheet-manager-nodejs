@@ -1,5 +1,5 @@
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
-import type { IModuleComponent, IModuleContainerComponent, IModuleListComponent, IModuleSelectComponent } from '@/domain/entities/module-content'
+import type { IModuleComponent } from '@/domain/entities/module-content'
 import type { ISheetTemplate } from '@/domain/entities/sheet-template'
 import type {
   IContainerTemplateValue,
@@ -19,36 +19,51 @@ export async function updateSheetModuleComponent(
   newModuleValues: IModuleTemplateValue[],
   originalSheetTemplate: ISheetTemplate,
 ) {
+  const parsedComponents = verifyAndParseComponents(originalSheetTemplate.id, JSON.parse(originalSheetTemplate.children))
   const updatedComponents: IModuleTemplateValue[] = []
 
   for (const newValue of newModuleValues) {
-    const parsedComponents = verifyAndParseComponents(newValue.id, JSON.parse(originalSheetTemplate.children))
-
-    const updatedComponentsForModule: IModuleTemplateValue[] = []
-
     for (const component of parsedComponents) {
       if (component.id === newValue.id) {
-        switch (component.type) {
-          case ISheetModuleTypes.TEXT:
-            updatedComponentsForModule.push(updateTextComponent(component, newValue as ITextTemplateValue))
-            break
-          case ISheetModuleTypes.LIST:
-            updatedComponentsForModule.push(updateListComponent(component, newValue as IListTemplateValue))
-            break
-          case ISheetModuleTypes.SELECT:
-            updatedComponentsForModule.push(updateSelectComponent(component, newValue as ISelectTemplateValue))
-            break
-          case ISheetModuleTypes.CONTAINER:
-            updatedComponentsForModule.push(updateContainerComponent(component, newValue as IContainerTemplateValue))
-            break
-        }
+        updatedComponents.push(updateComponentByType(component, newValue))
       }
     }
-
-    updatedComponents.push(...updatedComponentsForModule)
   }
 
   return updatedComponents
+}
+
+function updateComponentByType(
+  component: IModuleComponent,
+  newValue: IModuleTemplateValue
+): IModuleTemplateValue {
+  switch (component.type) {
+    case ISheetModuleTypes.TEXT:
+      return updateTextComponent(component, newValue)
+    case ISheetModuleTypes.LIST:
+      return updateListComponent(component, newValue)
+    case ISheetModuleTypes.SELECT:
+      return updateSelectComponent(component, newValue)
+    case ISheetModuleTypes.CONTAINER: 
+      return updateContainerComponent(component, newValue)
+  }
+}
+
+
+function isTextValue(value: IModuleTemplateValue): value is ITextTemplateValue {
+  return value.type === ISheetModuleTypes.TEXT
+}
+
+function isListValue(value: IModuleTemplateValue): value is IListTemplateValue {
+  return value.type === ISheetModuleTypes.LIST
+}
+
+function isSelectValue(value: IModuleTemplateValue): value is ISelectTemplateValue {
+  return value.type === ISheetModuleTypes.SELECT
+}
+
+function isContainerValue(value: IModuleTemplateValue): value is IContainerTemplateValue {
+  return value.type === ISheetModuleTypes.CONTAINER
 }
 
 /**
@@ -56,8 +71,15 @@ export async function updateSheetModuleComponent(
  * @param component - Component to be updated
  * @param newValue - New value for the component
  */
-function updateTextComponent(component: IModuleComponent, newValue: ITextTemplateValue) {
-  return { ...component, ...newValue } as ITextTemplateValue
+function updateTextComponent(
+  component: Extract<IModuleComponent, { type: ISheetModuleTypes.TEXT }>,
+  newValue: IModuleTemplateValue,
+) {
+  if (isTextValue(newValue)) {
+    return { ...component, ...newValue }
+  }
+
+  throw new Error('Invalid value type for TEXT component')
 }
 
 /**
@@ -65,13 +87,18 @@ function updateTextComponent(component: IModuleComponent, newValue: ITextTemplat
  * @param component - Component to be updated
  * @param newValue - New value for the component
  */
-function updateListComponent(component: IModuleComponent, newValue: IListTemplateValue) {
-  const castedComponent = component as IModuleListComponent
+function updateListComponent(
+  component: Extract<IModuleComponent, { type: ISheetModuleTypes.LIST }>,
+  newValue: IModuleTemplateValue,
+) {
+  if (!isListValue(newValue)) {
+    throw new Error('Invalid value type for LIST component')
+  }
 
   return {
-    ...castedComponent,
+    ...component,
     items: newValue.items?.map((newItem) => {
-      const existingItem = castedComponent.items?.find((item) => item.id === newItem.id)
+      const existingItem = component.items?.find((item) => item.id === newItem.id)
       return existingItem ? { ...existingItem, ...newItem } : newItem
     }),
   }
@@ -82,13 +109,18 @@ function updateListComponent(component: IModuleComponent, newValue: IListTemplat
  * @param component - Component to be updated
  * @param newValue - New value for the component
  */
-function updateSelectComponent(component: IModuleComponent, newValue: ISelectTemplateValue) {
-  const castedComponent = component as IModuleSelectComponent
+function updateSelectComponent(
+  component: Extract<IModuleComponent, { type: ISheetModuleTypes.SELECT }>,
+  newValue: IModuleTemplateValue,
+) {
+  if (!isSelectValue(newValue)) {
+    throw new Error('Invalid value type for SELECT component')
+  }
 
   return {
-    ...castedComponent,
+    ...component,
     options: newValue.options?.map((newOption) => {
-      const existingOption = castedComponent.options?.find((option) => option.id === newOption.id)
+      const existingOption = component.options?.find((option) => option.id === newOption.id)
       return existingOption ? { ...existingOption, ...newOption } : newOption
     }),
   } as ISelectTemplateValue
@@ -99,13 +131,18 @@ function updateSelectComponent(component: IModuleComponent, newValue: ISelectTem
  * @param component - Component to be updated
  * @param newValue - New value for the component
  */
-function updateContainerComponent(component: IModuleComponent, newValue: IContainerTemplateValue) {
-  const castedComponent = component as IModuleContainerComponent
+function updateContainerComponent(
+  component: Extract<IModuleComponent, { type: ISheetModuleTypes.CONTAINER }>,
+  newValue: IModuleTemplateValue,
+) {
+  if (!isContainerValue(newValue)) {
+    throw new Error('Invalid value type for CONTAINER component')
+  }
 
   return {
-    ...castedComponent,
+    ...component,
     children: newValue.children?.map((newChild) => {
-      const existingChild = castedComponent.children.find((child) => child.id === newChild.id)
+      const existingChild = component.children.find((child) => child.id === newChild.id)
       return existingChild ? { ...existingChild, ...newChild } : newChild
     }),
   } as IContainerTemplateValue

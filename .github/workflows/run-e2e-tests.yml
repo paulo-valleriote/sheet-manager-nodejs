@@ -36,3 +36,8 @@ jobs:
       env:
         JWT_SECRET: testing
         DATABASE_URL: postgresql://test-docker-user:test-docker-password@localhost:5432/sheet-manager
+        MAIL_USER: testing
+        MAIL_PASS: testing
+        MAIL_HOST: testing.url.test
+        MAIL_PORT: 1234
+        MAIL_IS_SECURE: false

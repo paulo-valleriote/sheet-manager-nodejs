@@ -13,13 +13,13 @@ describe('Create sheet use case', () => {
 
   it('should be able to create a sheet', async () => {
     await sut.execute({
-      name: 'Sheet 1',
+      pcName: 'Sheet 1',
       owner: 'user',
       userId: 'user-1',
     })
 
     const sheetsLenght = await sheetRepository.list({ userId: 'user-1' })
     expect(sheetsLenght.data).toHaveLength(1)
-    expect(sheetsLenght.data[0].name).toBe('Sheet 1')
+    expect(sheetsLenght.data[0].pcName).toBe('Sheet 1')
   })
 })

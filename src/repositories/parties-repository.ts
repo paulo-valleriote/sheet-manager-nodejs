@@ -1,11 +1,19 @@
-import type { IParty } from '@/domain/entities/party'
-import type { ICreatePartyParams, IDeletePartyParams, IGetPartyParams, IListPartiesParams, IUpdatePartyParams } from '@/repositories/@types/parties'
+import type {
+  ICreatePartyParams,
+  ICreatePartyResponse,
+  IDeletePartyParams,
+  IGetPartyParams,
+  IGetPartyResponse,
+  IListPartiesParams,
+  IListPartiesResponse,
+  IUpdatePartyParams,
+} from '@/repositories/@types/parties'
 
 export interface IPartiesRepository {
-  create(data: ICreatePartyParams): Promise<void>
-  findAll(params: IListPartiesParams): Promise<IParty[]>
-  findByPartyId(params: Pick<IGetPartyParams, 'partyId' | 'dungeonMasterId'>): Promise<IParty | null>
-  findAllByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>): Promise<IParty[]>
+  create(data: ICreatePartyParams): Promise<ICreatePartyResponse>
+  findAll(params: IListPartiesParams): Promise<IListPartiesResponse>
+  findById(params: Pick<IGetPartyParams, 'partyId'>): Promise<IGetPartyResponse>
+  findAllByDungeonMasterId(params: Pick<IGetPartyParams, 'dungeonMasterId'>): Promise<IListPartiesResponse>
   update(params: IUpdatePartyParams, id: string): Promise<void>
-  delete(params: Pick<IDeletePartyParams, 'partyId' | 'dungeonMasterId'>): Promise<void>
+  delete(params: Pick<IDeletePartyParams, 'partyId'>): Promise<void>
 }

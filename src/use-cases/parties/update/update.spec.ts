@@ -1,16 +1,20 @@
+import { InMemoryPartyMemberRepository } from '@/repositories/in-memory/in-memory-party-member-repostiory'
 import { InMemoryPartyRepository } from '@/repositories/in-memory/in-memory-party-repository'
+import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { CreatePartyUseCase } from '../create/create'
 import { UpdatePartyUseCase } from './update'
 
 describe('Update party use case', () => {
   let partyRepository: InMemoryPartyRepository
+  let partyMembersRepository: InMemoryPartyMemberRepository
   let createPartyUseCase: CreatePartyUseCase
   let sut: UpdatePartyUseCase
 
   beforeEach(() => {
     partyRepository = new InMemoryPartyRepository()
-    createPartyUseCase = new CreatePartyUseCase(partyRepository)
+    partyMembersRepository = new InMemoryPartyMemberRepository()
+    createPartyUseCase = new CreatePartyUseCase(partyRepository, partyMembersRepository)
     sut = new UpdatePartyUseCase(partyRepository)
   })
 
@@ -30,13 +34,12 @@ describe('Update party use case', () => {
       description: 'Party description 2',
       imgUrl: 'https://example.com/image2.png',
       maxSize: 15,
-      dungeonMasterId: 'user-1',
-      playerIds: [],
-    }, createdParties[0].id)
+      dungeonMasterId: 'user-1'
+    }, createdParties.data[0].id)
 
     const parties = await partyRepository.findAll({ dungeonMasterId: 'user-1' })
-    expect(parties).toHaveLength(1)
-    expect(parties[0].name).toBe('Party 2')
+    expect(parties.data).toHaveLength(1)
+    expect(parties.data[0].name).toBe('Party 2')
   })
 
   it('should not be able to update a party with invalid partyId', async () => {
@@ -47,8 +50,7 @@ describe('Update party use case', () => {
         imgUrl: 'https://example.com/image2.png',
         maxSize: 15,
         dungeonMasterId: 'user-1',
-        playerIds: [],
       }, 'invalid-party-id'),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

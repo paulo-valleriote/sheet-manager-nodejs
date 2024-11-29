@@ -17,7 +17,6 @@ model Sheet {
   id                        String                     @id @default(uuid())
   pcName                    String                     @map("pc_name")
   owner                     String
-  isActive                  Boolean                    @default(true)
   isEditable                Boolean                    @default(true)
   pcAge                     Int?                       @map("pc_age")
   pcSpecie                  String?                    @map("pc_specie")
@@ -30,6 +29,7 @@ model Sheet {
   user                      User                       @relation(fields: [userId], references: [id])
   sheetTemplate             SheetTemplate?             @relation(fields: [sheetTemplateId], references: [id])
   playerCharacterAttributes PlayerCharacterAttributes?
+  partyMember               PartyMember[]
 
   @@map("sheets")
 }
@@ -46,8 +46,9 @@ model PlayerCharacterAttributes {
 }
 
 model AttributesTemplate {
-  id                        String                      @id @default(uuid())
-  attributes                Json
+  id         String @id @default(uuid())
+  attributes Json
+
   playerCharacterAttributes PlayerCharacterAttributes[]
 
   @@map("attributes_templates")
@@ -59,45 +60,57 @@ model SheetTemplate {
   isDefault Boolean  @default(false) @map("is_default")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  Sheet     Sheet[]
+
+  Sheet Sheet[]
 
   @@map("sheet_templates")
 }
 
 model Party {
-  id               String             @id @default(uuid())
-  name             String
-  description      String?
-  imgUrl           String?            @map("img_url")
-  maxSize          Int?               @map("max_size")
-  createdAt        DateTime           @default(now()) @map("created_at")
-  updatedAt        DateTime           @updatedAt @map("updated_at")
-  dungeonMasterId  String             @map("dungeon_master_id")
-  players          User[]
-  RoleOfParty      RoleOfParty[]
-  CharacterOfParty CharacterOfParty[]
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  imgUrl          String?  @map("img_url")
+  maxSize         Int?     @map("max_size")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  dungeonMasterId String   @map("dungeon_master_id")
+
+  players           User[]
+  partyMembers      PartyMember[]
+  membersCharacters MemberCharacters[]
 
   @@map("parties")
 }
 
-model RoleOfParty {
-  id      String    @id @default(uuid())
-  partyId String    @map("party_id")
-  userId  String    @map("user_id")
-  role    PartyRole @default(PLAYER)
-  party   Party     @relation(fields: [partyId], references: [id])
-  user    User      @relation(fields: [userId], references: [id])
+enum PartyRole {
+  DUNGEON_MASTER
+  PLAYER
+}
+
+model PartyMember {
+  id        String    @id @default(uuid())
+  partyId   String    @map("party_id")
+  userId    String    @map("user_id")
+  sheetId   String?   @map("sheet_id")
+  role      PartyRole @default(PLAYER)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  party Party  @relation(fields: [partyId], references: [id])
+  user  User   @relation(fields: [userId], references: [id])
+  sheet Sheet? @relation(fields: [sheetId], references: [id])
 
   @@map("role_of_parties")
 }
 
-model CharacterOfParty {
+model MemberCharacters {
   id          String @id @default(uuid())
   partyId     String @map("party_id")
   characterId String @map("character_id")
   userId      String @map("user_id")
-  party       Party  @relation(fields: [partyId], references: [id])
-  user        User   @relation(fields: [userId], references: [id])
+
+  party Party @relation(fields: [partyId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
 
   @@map("character_of_parties")
 }
@@ -107,22 +120,18 @@ enum UserRole {
   USER
 }
 
-enum PartyRole {
-  MASTER
-  PLAYER
-}
-
 model User {
-  id               String             @id @default(uuid())
-  email            String             @unique
-  passwordHash     String             @map("password_hash")
-  role             UserRole           @default(USER)
-  createdAt        DateTime           @default(now()) @map("created_at")
-  partyId          String?            @map("party_id")
-  sheets           Sheet[]
-  Party            Party[]
-  RoleOfParty      RoleOfParty[]
-  CharacterOfParty CharacterOfParty[]
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(USER)
+  createdAt    DateTime @default(now()) @map("created_at")
+  partyId      String?  @map("party_id")
+
+  sheets          Sheet[]
+  party           Party[]
+  memberOfParties PartyMember[]
+  partyCharacters MemberCharacters[]
 
   @@map("users")
 }

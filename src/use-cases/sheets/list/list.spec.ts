@@ -17,12 +17,12 @@ describe('List sheets use case', () => {
   it('should be able to list created sheets', async () => {
     await Promise.all([
       createSheetUseCase.execute({
-        name: 'Sheet 1',
+        pcName: 'Sheet 1',
         owner: 'user',
         userId: 'user-1',
       }),
       createSheetUseCase.execute({
-        name: 'Sheet 2',
+        pcName: 'Sheet 2',
         owner: 'user',
         userId: 'user-1',
       }),
@@ -30,14 +30,14 @@ describe('List sheets use case', () => {
 
     const sheets = await sut.execute({ userId: 'user-1' })
     expect(sheets.data).toHaveLength(2)
-    expect(sheets.data[0].name).toBe('Sheet 1')
-    expect(sheets.data[1].name).toBe('Sheet 2')
+    expect(sheets.data[0].pcName).toBe('Sheet 1')
+    expect(sheets.data[1].pcName).toBe('Sheet 2')
   })
 
   it('should not be able to list sheets from another user', async () => {
     await Promise.all([
       createSheetUseCase.execute({
-        name: 'Sheet 2',
+        pcName: 'Sheet 2',
         owner: 'user',
         userId: 'user-2',
       }),

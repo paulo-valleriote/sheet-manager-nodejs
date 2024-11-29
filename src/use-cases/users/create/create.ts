@@ -1,3 +1,4 @@
+import { IUserRole } from '@/domain/entities/enums/user-roles'
 import type { ICryptHandler } from '@/lib/@types/crypt'
 import type { IUsersRepository } from '@/repositories/users-repository'
 import { UserAlreadyExistsError } from '../../errors/user-already-exists-error'
@@ -25,6 +26,7 @@ export class CreateUserUseCase {
     await this.userRepository.create({
       email: data.email,
       passwordHash,
+      role: IUserRole.USER,
     })
   }
 }

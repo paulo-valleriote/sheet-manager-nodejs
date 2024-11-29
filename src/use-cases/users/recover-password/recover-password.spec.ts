@@ -1,3 +1,4 @@
+import { IUserRole } from '@/domain/entities/enums/user-roles'
 import { CryptHandler } from '@/lib/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -18,6 +19,7 @@ describe('Recover password use case', () => {
     await userRepository.create({
       email: 'user@example.com',
       passwordHash: await cryptHandler.hash('password'),
+      role: IUserRole.USER,
     })
 
     await sut.execute({

@@ -6,9 +6,9 @@ export class UpdatePartyUseCase {
   constructor(private partiesRepository: IPartiesRepository) {}
 
   async execute(data: IUpdatePartyParams, id: string) {
-    const party = await this.partiesRepository.findByPartyId({ partyId: id, dungeonMasterId: data.dungeonMasterId })
+    const party = await this.partiesRepository.findById({ partyId: id })
 
-    if (!party) {
+    if (party.data === null) {
       throw new ResourceNotFoundError()
     }
 

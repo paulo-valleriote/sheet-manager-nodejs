@@ -1,4 +1,4 @@
 export enum IPartyRoles {
-  DUNGEON_MASTER = 'dungeon_master',
-  PLAYER = 'player',
+  DUNGEON_MASTER = 'DUNGEON_MASTER',
+  PLAYER = 'PLAYER',
 }

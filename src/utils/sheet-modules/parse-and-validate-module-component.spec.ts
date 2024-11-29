@@ -19,11 +19,11 @@ describe('verifyAndParseComponents', () => {
         id: 'module-id',
         parentId: 'sheet-id',
         type: ISheetModuleTypes.LIST,
-        items: [{ label: 'Item label', value: 'Item value' }],
+        items: [{ id: 'item-id', label: 'Item label', value: 'Item value' }],
       },
     ]
 
-    const result = verifyAndParseComponents(components)
+    const result = verifyAndParseComponents('sheet-id', components)
     expect(result).toEqual(components)
   })
 
@@ -37,6 +37,6 @@ describe('verifyAndParseComponents', () => {
       },
     ]
 
-    expect(() => verifyAndParseComponents(components)).toThrow(InvalidBodyIntoModuleComponentError)
+    expect(() => verifyAndParseComponents('sheet-id', components)).toThrow(InvalidBodyIntoModuleComponentError)
   })
 })
