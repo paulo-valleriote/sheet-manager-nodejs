@@ -1,3 +1,4 @@
+import type { IAlertNotification } from '@/domain/entities/notifications/alert-notification'
 import type { Optional } from '@/domain/types/optional'
 
 interface IAlertNotificationReadonlyOperationParams {
@@ -22,7 +23,7 @@ interface IListAlertsParams extends Pick<IAlertNotificationReadonlyOperationPara
  * @property {string} alertType - Type of the alert
  * @property {string} userId - Unique identifier of the user
  */
-interface ICreateAlertParams extends Optional<IAlertNotification, 'id' | 'createdAt'> {}
+interface ICreateAlertParams extends Optional<IAlertNotification, 'id' | 'createdAt' | 'viewedAt'> {}
 
 /** Parameters for updating an existing alert
  * @property {string} userId - Unique identifier of the user

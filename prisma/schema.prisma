@@ -168,6 +168,12 @@ model Notification {
   @@map("notifications")
 }
 
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REFUSED
+}
+
 model PartyInvite {
   id        String           @id @default(uuid())
   createdAt DateTime         @default(now()) @map("created_at")
@@ -176,6 +182,7 @@ model PartyInvite {
   fromId    String           @map("from_id")
   toId      String           @map("to_id")
   type      NotificationType
+  status    InviteStatus     @default(PENDING)
   from      User             @relation(name: "party_invite_from", fields: [fromId], references: [id])
   to        User             @relation(name: "party_invite_to", fields: [toId], references: [id])
   viewedAt  DateTime?        @map("viewed_at")
