@@ -1,5 +1,5 @@
 import { InMemoryPartyMemberRepository } from '@/repositories/in-memory/in-memory-party-member-repostiory'
-import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { GetMemberUseCase } from './get-member'
 

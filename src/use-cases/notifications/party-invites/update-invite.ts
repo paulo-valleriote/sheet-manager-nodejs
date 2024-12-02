@@ -1,7 +1,7 @@
 import type { ICreatePartyInviteParams } from '@/repositories/@types/party-invite-notification'
 import type { IInviteNotificationsRepository } from '@/repositories/prisma-invite-notifications-repository'
-import { MissingParametersError } from '@/use-cases/_errors/missing-parameters-error'
-import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
+import { MissingParametersError } from '@/use-cases/_errors/extended/missing-parameters-error'
 
 interface IUpdateInviteParams extends Partial<ICreatePartyInviteParams> {}
 

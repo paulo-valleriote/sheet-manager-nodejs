@@ -1,6 +1,6 @@
 import type { IModuleComponent } from '@/domain/entities/sheet/module-content'
 import type { ISheetTemplatesRepository } from '@/repositories/sheet-templates-repository'
-import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
 import { verifyAndParseComponents } from '@/utils/sheet-modules/parse-and-validate-module-components'
 
 interface IUpdateSheetTemplateProps {

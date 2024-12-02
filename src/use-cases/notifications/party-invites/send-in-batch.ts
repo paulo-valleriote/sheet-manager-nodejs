@@ -1,7 +1,7 @@
 import { IInviteStatus } from '@/domain/entities/enums/invite-status'
 import type { ICreatePartyInviteParams } from '@/repositories/@types/party-invite-notification'
 import type { IInviteNotificationsRepository } from '@/repositories/prisma-invite-notifications-repository'
-import { MissingParametersError } from '@/use-cases/_errors/missing-parameters-error'
+import { MissingParametersError } from '@/use-cases/_errors/extended/missing-parameters-error'
 
 interface ISendInBatchParams extends ICreatePartyInviteParams {
   users: string[]

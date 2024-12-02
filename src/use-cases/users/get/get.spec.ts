@@ -1,7 +1,7 @@
 import { CryptHandler } from '@/lib/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { ResourceNotFoundError } from '../../_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../../_errors/core/resource-not-found-error'
 import { CreateUserUseCase } from '../create/create'
 import { GetUserUseCase } from './get'
 

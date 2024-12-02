@@ -1,5 +1,5 @@
 import { InMemorySheetTemplateRepository } from '@/repositories/in-memory/in-memory-sheet-template-repository'
-import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
 import { beforeEach, expect, it } from 'vitest'
 import { describe } from 'vitest'
 import { DeleteSheetTemplateUseCase } from './delete-sheet-template'

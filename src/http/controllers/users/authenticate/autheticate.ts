@@ -1,5 +1,5 @@
 import { FastifyJwtHandler } from '@/lib/fastify-jwt-handler'
-import { InvalidCredentialsError } from '@/use-cases/_errors/invalid-credentials-error'
+import { InvalidCredentialsError } from '@/use-cases/_errors/extended/user/invalid-credentials-error'
 import { makeAuthenticateUserUseCase } from '@/use-cases/users/_factories/make-authenticate-user-use-case'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'

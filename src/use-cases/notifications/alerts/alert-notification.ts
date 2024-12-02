@@ -9,7 +9,7 @@ import type {
   IUpdateAlertParams,
 } from '@/repositories/@types/alert-notifications'
 import type { IAlertNotificationsRepository } from '@/repositories/alert-notifications-repository'
-import { ResourceNotFoundError } from '@/use-cases/_errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
 import { type IBaseNotification, NotificationBaseClass } from '../notification-base-class'
 
 interface IAlertNotificationsUpdateParams extends IUpdateAlertParams {
