@@ -8,6 +8,7 @@ import { ROUTE } from './http/controllers/routes.index'
 import { sheetTemplatesRoutes } from './http/controllers/sheet-templates/routes'
 import { sheetsRoutes } from './http/controllers/sheets/routes'
 import { userRoutes } from './http/controllers/users/routes'
+import { APP_ERRORS } from './use-cases/_errors'
 
 // App Configuration
 const app = Fastify({
@@ -53,6 +54,22 @@ app.register(partiesRoutes, {
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
     return reply.status(400).send({ message: 'Validation error.', issues: error.format() })
+  }
+
+  if (error instanceof APP_ERRORS.BadRequestError) {
+    return reply.status(400).send({ message: error.message })
+  }
+
+  if (error instanceof APP_ERRORS.ResourceNotFoundError) {
+    return reply.status(404).send({ message: error.message })
+  }
+
+  if (error instanceof APP_ERRORS.UnauthorizedError) {
+    return reply.status(401).send({ message: error.message })
+  }
+
+  if (error instanceof APP_ERRORS.ForbiddenError) {
+    return reply.status(403).send({ message: error.message })
   }
 
   if (ENV.NODE_ENV !== 'prod') {
