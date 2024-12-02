@@ -1,4 +1,4 @@
-import type { IPartyMember } from '@/domain/entities/party-member'
+import type { IPartyMember } from '@/domain/entities/party/party-member'
 import type { Optional } from '@/domain/types/optional'
 
 interface IPartyMemberReadonlyOperationParams {

@@ -1,4 +1,4 @@
-import type { ISheetTemplate } from '@/domain/entities/sheet-template'
+import type { ISheetTemplate } from '@/domain/entities/sheet/sheet-template'
 import type { IModuleTemplateValue, IUpdateSheetParams } from '@/repositories/@types/sheets'
 import type { ISheetTemplatesRepository } from '@/repositories/sheet-templates-repository'
 import type { ISheetsRepository } from '@/repositories/sheets-repository'

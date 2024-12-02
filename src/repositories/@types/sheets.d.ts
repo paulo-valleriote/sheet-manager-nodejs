@@ -1,4 +1,4 @@
-import type { ISheet } from '@/domain/entities/sheet'
+import type { ISheet } from '@/domain/entities/sheet/sheet'
 import type { Optional } from '@/domain/types/optional'
 
 interface ISheetReadonlyOperationParams {

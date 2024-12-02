@@ -1,5 +1,5 @@
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
-import type { ISheetTemplate } from '@/domain/entities/sheet-template'
+import type { ISheetTemplate } from '@/domain/entities/sheet/sheet-template'
 import type { IModuleTemplateValue } from '@/repositories/@types/sheet-module-values'
 import { describe, expect, it } from 'vitest'
 import { updateSheetModuleComponent } from './update-sheet-module-component'

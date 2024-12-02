@@ -79,6 +79,7 @@ model Party {
   players           User[]
   partyMembers      PartyMember[]
   membersCharacters MemberCharacters[]
+  PartyInvite       PartyInvite[]
 
   @@map("parties")
 }
@@ -128,10 +129,63 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at")
   partyId      String?  @map("party_id")
 
-  sheets          Sheet[]
-  party           Party[]
-  memberOfParties PartyMember[]
-  partyCharacters MemberCharacters[]
+  sheets                Sheet[]
+  party                 Party[]
+  memberOfParties       PartyMember[]
+  partyCharacters       MemberCharacters[]
+  receivedNotifications Notification[]     @relation("notification_from")
+  sendedNotifications   Notification[]     @relation("notification_to")
+  receivedInvites       PartyInvite[]      @relation("party_invite_from")
+  sendedInvites         PartyInvite[]      @relation("party_invite_to")
 
   @@map("users")
+}
+
+enum NotificationType {
+  ALERT
+  PARTY_INVITE
+}
+
+enum AlertType {
+  ERROR
+  ACTION_NEEDED
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  title     String?
+  content   String?
+  type      NotificationType
+  alertType AlertType?       @map("alert_type")
+  createdAt DateTime         @default(now()) @map("created_at")
+  viewedAt  DateTime?        @map("viewed_at")
+
+  fromId String @map("from_id")
+  toId   String @map("to_id")
+  from   User   @relation(name: "notification_from", fields: [fromId], references: [id])
+  to     User   @relation(name: "notification_to", fields: [toId], references: [id])
+
+  @@map("notifications")
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  REFUSED
+}
+
+model PartyInvite {
+  id        String           @id @default(uuid())
+  createdAt DateTime         @default(now()) @map("created_at")
+  partyId   String           @map("party_id")
+  party     Party            @relation(fields: [partyId], references: [id])
+  fromId    String           @map("from_id")
+  toId      String           @map("to_id")
+  type      NotificationType
+  status    InviteStatus     @default(PENDING)
+  from      User             @relation(name: "party_invite_from", fields: [fromId], references: [id])
+  to        User             @relation(name: "party_invite_to", fields: [toId], references: [id])
+  viewedAt  DateTime?        @map("viewed_at")
+
+  @@map("party_invites")
 }

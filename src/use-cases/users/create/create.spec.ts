@@ -1,7 +1,7 @@
 import { CryptHandler } from '@/lib/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { UserAlreadyExistsError } from '../../errors/user-already-exists-error'
+import { UserAlreadyExistsError } from '../../_errors/extended/user/user-already-exists-error'
 import { CreateUserUseCase } from './create'
 
 describe('Create user use case', () => {

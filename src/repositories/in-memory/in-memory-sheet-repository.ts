@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import type { ISheet } from '@/domain/entities/sheet'
+import type { ISheet } from '@/domain/entities/sheet/sheet'
 import type {
   ICreateSheetParams,
   IDeleteSheetParams,

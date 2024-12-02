@@ -1,8 +1,8 @@
 import type { IUser } from '@/domain/entities/user'
 import type { ICryptHandler } from '@/lib/@types/crypt'
 import type { IUsersRepository } from '@/repositories/users-repository'
-import { InvalidCredentialsError } from '../../errors/invalid-credentials-error'
-import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../../_errors/core/resource-not-found-error'
+import { InvalidCredentialsError } from '../../_errors/extended/user/invalid-credentials-error'
 
 interface AuthenticateUseCaseRequest {
   email: string

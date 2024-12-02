@@ -1,6 +1,6 @@
 import { ISheetModuleTypes } from '@/domain/entities/enums/sheet-module-types'
-import type { IModuleComponent } from '@/domain/entities/module-content'
-import type { ISheetTemplate } from '@/domain/entities/sheet-template'
+import type { IModuleComponent } from '@/domain/entities/sheet/module-content'
+import type { ISheetTemplate } from '@/domain/entities/sheet/sheet-template'
 import type {
   IContainerTemplateValue,
   IListTemplateValue,

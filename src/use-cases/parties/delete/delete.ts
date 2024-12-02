@@ -1,7 +1,7 @@
 import type { IDeletePartyParams } from '@/repositories/@types/parties'
 import type { IPartiesRepository } from '@/repositories/parties-repository'
 import type { IPartyMembersRepository } from '@/repositories/party-members-repository'
-import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error'
+import { ResourceNotFoundError } from '@/use-cases/_errors/core/resource-not-found-error'
 
 export class DeletePartyUseCase {
   constructor(

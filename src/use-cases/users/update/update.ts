@@ -1,6 +1,6 @@
 import type { IUpdateUserParams } from '@/repositories/@types/users'
 import type { IUsersRepository } from '@/repositories/users-repository'
-import { ResourceNotFoundError } from '../../errors/resource-not-found-error'
+import { ResourceNotFoundError } from '../../_errors/core/resource-not-found-error'
 
 export class UpdateUserUseCase {
   constructor(private userRepository: IUsersRepository) {}
