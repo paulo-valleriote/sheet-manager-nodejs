@@ -1,6 +1,8 @@
 import { ENV } from '@/env'
 import nodemailer from 'nodemailer'
-import type { IMailData, IMailHandler } from './@types/email'
+import { z } from 'zod'
+import type { IMailData, IMailHandler } from '../@types/email'
+import type { IZodParse } from '../@types/zod'
 
 export class NodemailerMailHandler implements IMailHandler {
   private transporter: nodemailer.Transporter
@@ -26,5 +28,29 @@ export class NodemailerMailHandler implements IMailHandler {
     })
 
     console.log('Message sent: %s', deliveryInfo.messageId)
+  }
+
+  validate(data: string): IZodParse<IMailData> {
+    const mailSchema = z.object({
+      from: z.string().optional(),
+      to: z.string(),
+      subject: z.string(),
+      text: z.string().optional(),
+      html: z.string().optional(),
+    })
+
+    const parsedData = mailSchema.safeParse(JSON.parse(data))
+
+    if (parsedData.success) {
+      return {
+        data: parsedData.data,
+        error: false,
+      }
+    }
+
+    return {
+      data: null,
+      error: true,
+    }
   }
 }

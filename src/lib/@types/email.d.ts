@@ -1,3 +1,5 @@
+import type { IZodParse } from './zod'
+
 export interface IMailData {
   from?: string
   to: string
@@ -8,4 +10,5 @@ export interface IMailData {
 
 export interface IMailHandler {
   sendMail(data: IMailData): Promise<void>
+  validate(data: string): IZodParse<IMailData>
 }
