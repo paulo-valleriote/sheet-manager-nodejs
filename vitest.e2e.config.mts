@@ -7,7 +7,7 @@ export default mergeConfig(
     test: {
       name: 'e2e',
       environmentMatchGlobs: [['./src/http/controllers/**', 'prisma']],
-      include: ['./src/http/**/*.spec.ts'],
+      include: ['**/*.e2e.spec.ts', './src/http/**/*.spec.ts'],
     },
   }),
 )

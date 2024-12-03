@@ -6,7 +6,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       name: 'unit',
-      include: ['./src/use-cases/**/*.spec.ts', './src/utils/**/*.spec.ts'],
+      include: ['**/*.unit.spec.ts', './src/use-cases/**/*.spec.ts', './src/utils/**/*.spec.ts'],
     },
   }),
 )

@@ -6,7 +6,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       name: 'integration',
-      include: ['./src/lib/**/*.spec.ts'],
+      include: ['**/*.integration.spec.ts'],
     },
   }),
 )
