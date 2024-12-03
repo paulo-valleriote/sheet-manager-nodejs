@@ -2,13 +2,13 @@ import { ENV } from '@env'
 import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import Fastify from 'fastify'
-import { ZodError } from 'zod'
+import { GlobalErrorHandler } from './global-error-handler'
 import { partiesRoutes } from './http/controllers/parties/routes'
 import { ROUTE } from './http/controllers/routes.index'
 import { sheetTemplatesRoutes } from './http/controllers/sheet-templates/routes'
 import { sheetsRoutes } from './http/controllers/sheets/routes'
 import { userRoutes } from './http/controllers/users/routes'
-import { APP_ERRORS } from './use-cases/_errors'
+import { RabbitMQSetup } from './lib/message-broker/rabbitmq-setup'
 
 // App Configuration
 const app = Fastify({
@@ -32,6 +32,13 @@ app.register(fastifyJwt, {
   closeClient: true
 })*/
 
+const rabbitMQSetup = RabbitMQSetup.getInstance()
+rabbitMQSetup.setup()
+
+process.on('SIGINT', rabbitMQSetup.onShutdown)
+process.on('SIGTERM', rabbitMQSetup.onShutdown)
+
+
 // Routes
 app.get('/', () => {
   return { message: 'Hello World! Welcome to "The Sheet Ledger" API.', routes: ROUTE }
@@ -51,32 +58,6 @@ app.register(partiesRoutes, {
 })
 
 // Global error handler
-app.setErrorHandler((error, _, reply) => {
-  if (error instanceof ZodError) {
-    return reply.status(400).send({ message: 'Validation error.', issues: error.format() })
-  }
-
-  if (error instanceof APP_ERRORS.BadRequestError) {
-    return reply.status(400).send({ message: error.message })
-  }
-
-  if (error instanceof APP_ERRORS.ResourceNotFoundError) {
-    return reply.status(404).send({ message: error.message })
-  }
-
-  if (error instanceof APP_ERRORS.UnauthorizedError) {
-    return reply.status(401).send({ message: error.message })
-  }
-
-  if (error instanceof APP_ERRORS.ForbiddenError) {
-    return reply.status(403).send({ message: error.message })
-  }
-
-  if (ENV.NODE_ENV !== 'prod') {
-    console.error(error)
-  }
-
-  return reply.status(500).send({ message: 'Internal server error.' })
-})
+app.setErrorHandler(new GlobalErrorHandler().handle)
 
 export default app
