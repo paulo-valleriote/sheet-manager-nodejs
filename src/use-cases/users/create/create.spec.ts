@@ -1,4 +1,4 @@
-import { CryptHandler } from '@/lib/crypt-handler'
+import { CryptHandler } from '@/lib/hashing/crypt-handler'
 import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-user-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { UserAlreadyExistsError } from '../../_errors/extended/user/user-already-exists-error'

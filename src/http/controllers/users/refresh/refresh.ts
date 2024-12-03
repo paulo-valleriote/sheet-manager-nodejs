@@ -1,4 +1,4 @@
-import { FastifyJwtHandler } from '@/lib/fastify-jwt-handler'
+import { FastifyJwtHandler } from '@/lib/jwt/fastify-jwt-handler'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply) {

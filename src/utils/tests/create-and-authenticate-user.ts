@@ -1,5 +1,5 @@
 import { IUserRole } from '@/domain/entities/enums/user-roles'
-import { CryptHandler } from '@/lib/crypt-handler'
+import { CryptHandler } from '@/lib/hashing/crypt-handler'
 import { prisma } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import request from 'supertest'
