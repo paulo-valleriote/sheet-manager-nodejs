@@ -1,6 +1,7 @@
 import { ENV } from '@env'
 import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
+import fastifyRedis from '@fastify/redis'
 import Fastify from 'fastify'
 import { GlobalErrorHandler } from './global-error-handler'
 import { partiesRoutes } from './http/controllers/parties/routes'
@@ -27,10 +28,10 @@ app.register(fastifyJwt, {
     expiresIn: '10m',
   },
 })
-/*app.register(fastifyRedis, {
+app.register(fastifyRedis, {
   url: ENV.CACHE_DB_URL,
   closeClient: true
-})*/
+})
 
 const rabbitMQSetup = RabbitMQSetup.getInstance()
 rabbitMQSetup.setup()
